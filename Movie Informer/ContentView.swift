@@ -11,8 +11,24 @@ struct ContentView: View {
     @StateObject var viewRouter: ViewRouter
     
     var body: some View {
-        VStack {
-            Spacer()
+//        VStack {
+//            Spacer()
+//            switch viewRouter.currentPage {
+//            case .home:
+//                HomeView()
+//            case .bookmarks:
+//                Text("Bookmarks View")
+//            case .viewed:
+//                Text("Viewed View")
+//            case .settings:
+//                Text("Settings View")
+//            }
+//            Spacer()
+//            CustomTabBar(viewRouter: viewRouter)
+//        }
+//            .edgesIgnoringSafeArea(.bottom)
+        
+        ZStack {
             switch viewRouter.currentPage {
             case .home:
                 HomeView()
@@ -23,10 +39,12 @@ struct ContentView: View {
             case .settings:
                 Text("Settings View")
             }
-            Spacer()
-            CustomTabBar(viewRouter: viewRouter)
-        }
+            VStack {
+                Spacer()
+                CustomTabBar(viewRouter: viewRouter)
+            }
             .edgesIgnoringSafeArea(.bottom)
+        }
     }
 }
 

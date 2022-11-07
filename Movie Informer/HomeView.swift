@@ -8,15 +8,35 @@
 import SwiftUI
 
 struct HomeView: View {
+    let filmsCollections = FilmsCollection.getFilmsCollections()
+    
     var body: some View {
-        Text("Home View")
-            .font(.custom("Inter-Bold", size: 32))
-            .foregroundColor(Color("Text Main"))
+        NavigationView {
+            ZStack {
+                Color("Back Main")
+                    .ignoresSafeArea()
+                ScrollView {
+                    VStack {
+                        ForEach(filmsCollections) { collection in
+                            FilmsCollectionCellView(
+                                imageName: collection.image,
+                                title: collection.title,
+                                filmsCount: collection.filmsCount,
+                                viewed: collection.viewed
+                            )
+                        }
+                    }
+                }
+                .navigationTitle("Подборки")
+            }
+        }
     }
 }
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
+        VStack {
+            HomeView()
+        }
     }
 }
