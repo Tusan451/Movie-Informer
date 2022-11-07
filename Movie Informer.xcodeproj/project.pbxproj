@@ -11,6 +11,17 @@
 		E03C6D7C2913F93D00B9D775 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E03C6D7B2913F93D00B9D775 /* ContentView.swift */; };
 		E03C6D7E2913F93E00B9D775 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E03C6D7D2913F93E00B9D775 /* Assets.xcassets */; };
 		E03C6D812913F93E00B9D775 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E03C6D802913F93E00B9D775 /* Preview Assets.xcassets */; };
+		E03C6D892913FCE000B9D775 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = E03C6D882913FCE000B9D775 /* Realm */; };
+		E03C6D8B2913FCE000B9D775 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E03C6D8A2913FCE000B9D775 /* RealmSwift */; };
+		E0A02AA8291912E300CD89EB /* CustomTabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A02AA7291912E300CD89EB /* CustomTabBarItem.swift */; };
+		E0A02AAA29191A7300CD89EB /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A02AA929191A7300CD89EB /* CustomTabBar.swift */; };
+		E0A02AAC29191C8F00CD89EB /* Extension View + CornerRadius.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A02AAB29191C8F00CD89EB /* Extension View + CornerRadius.swift */; };
+		E0A02AAE2919228B00CD89EB /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A02AAD2919228B00CD89EB /* HomeView.swift */; };
+		E0A02AB0291928BF00CD89EB /* ViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A02AAF291928BF00CD89EB /* ViewRouter.swift */; };
+		E0AD3FD5291433C900EE2D8C /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E0AD3FD1291433C900EE2D8C /* Inter-SemiBold.ttf */; };
+		E0AD3FD6291433C900EE2D8C /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E0AD3FD2291433C900EE2D8C /* Inter-Regular.ttf */; };
+		E0AD3FD7291433C900EE2D8C /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E0AD3FD3291433C900EE2D8C /* Inter-Bold.ttf */; };
+		E0AD3FD8291433C900EE2D8C /* Inter-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E0AD3FD4291433C900EE2D8C /* Inter-Medium.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +30,16 @@
 		E03C6D7B2913F93D00B9D775 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E03C6D7D2913F93E00B9D775 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E03C6D802913F93E00B9D775 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		E0A02AA7291912E300CD89EB /* CustomTabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarItem.swift; sourceTree = "<group>"; };
+		E0A02AA929191A7300CD89EB /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
+		E0A02AAB29191C8F00CD89EB /* Extension View + CornerRadius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension View + CornerRadius.swift"; sourceTree = "<group>"; };
+		E0A02AAD2919228B00CD89EB /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		E0A02AAF291928BF00CD89EB /* ViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRouter.swift; sourceTree = "<group>"; };
+		E0AD3FD1291433C900EE2D8C /* Inter-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-SemiBold.ttf"; sourceTree = "<group>"; };
+		E0AD3FD2291433C900EE2D8C /* Inter-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Regular.ttf"; sourceTree = "<group>"; };
+		E0AD3FD3291433C900EE2D8C /* Inter-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Bold.ttf"; sourceTree = "<group>"; };
+		E0AD3FD4291433C900EE2D8C /* Inter-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Medium.ttf"; sourceTree = "<group>"; };
+		E0AD3FD9291434A200EE2D8C /* Movie-Informer-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Movie-Informer-Info.plist"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -26,6 +47,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E03C6D8B2913FCE000B9D775 /* RealmSwift in Frameworks */,
+				E03C6D892913FCE000B9D775 /* Realm in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,9 +74,14 @@
 		E03C6D782913F93D00B9D775 /* Movie Informer */ = {
 			isa = PBXGroup;
 			children = (
+				E0A02AA6291912AF00CD89EB /* Components */,
+				E09FE2C929190DA100F817EB /* Helpers */,
+				E0AD3FD9291434A200EE2D8C /* Movie-Informer-Info.plist */,
 				E03C6D792913F93D00B9D775 /* Movie_InformerApp.swift */,
 				E03C6D7B2913F93D00B9D775 /* ContentView.swift */,
+				E0A02AAD2919228B00CD89EB /* HomeView.swift */,
 				E03C6D7D2913F93E00B9D775 /* Assets.xcassets */,
+				E0AD3FD02914339800EE2D8C /* Fonts */,
 				E03C6D7F2913F93E00B9D775 /* Preview Content */,
 			);
 			path = "Movie Informer";
@@ -65,6 +93,35 @@
 				E03C6D802913F93E00B9D775 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		E09FE2C929190DA100F817EB /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				E0A02AAB29191C8F00CD89EB /* Extension View + CornerRadius.swift */,
+				E0A02AAF291928BF00CD89EB /* ViewRouter.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		E0A02AA6291912AF00CD89EB /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				E0A02AA7291912E300CD89EB /* CustomTabBarItem.swift */,
+				E0A02AA929191A7300CD89EB /* CustomTabBar.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		E0AD3FD02914339800EE2D8C /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				E0AD3FD3291433C900EE2D8C /* Inter-Bold.ttf */,
+				E0AD3FD1291433C900EE2D8C /* Inter-SemiBold.ttf */,
+				E0AD3FD4291433C900EE2D8C /* Inter-Medium.ttf */,
+				E0AD3FD2291433C900EE2D8C /* Inter-Regular.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +140,10 @@
 			dependencies = (
 			);
 			name = "Movie Informer";
+			packageProductDependencies = (
+				E03C6D882913FCE000B9D775 /* Realm */,
+				E03C6D8A2913FCE000B9D775 /* RealmSwift */,
+			);
 			productName = "Movie Informer";
 			productReference = E03C6D762913F93D00B9D775 /* Movie Informer.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +172,9 @@
 				Base,
 			);
 			mainGroup = E03C6D6D2913F93D00B9D775;
+			packageReferences = (
+				E03C6D872913FCE000B9D775 /* XCRemoteSwiftPackageReference "realm-swift" */,
+			);
 			productRefGroup = E03C6D772913F93D00B9D775 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -125,7 +189,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E0AD3FD5291433C900EE2D8C /* Inter-SemiBold.ttf in Resources */,
+				E0AD3FD7291433C900EE2D8C /* Inter-Bold.ttf in Resources */,
+				E0AD3FD8291433C900EE2D8C /* Inter-Medium.ttf in Resources */,
 				E03C6D812913F93E00B9D775 /* Preview Assets.xcassets in Resources */,
+				E0AD3FD6291433C900EE2D8C /* Inter-Regular.ttf in Resources */,
 				E03C6D7E2913F93E00B9D775 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -137,7 +205,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E0A02AAA29191A7300CD89EB /* CustomTabBar.swift in Sources */,
+				E0A02AB0291928BF00CD89EB /* ViewRouter.swift in Sources */,
 				E03C6D7C2913F93D00B9D775 /* ContentView.swift in Sources */,
+				E0A02AA8291912E300CD89EB /* CustomTabBarItem.swift in Sources */,
+				E0A02AAE2919228B00CD89EB /* HomeView.swift in Sources */,
+				E0A02AAC29191C8F00CD89EB /* Extension View + CornerRadius.swift in Sources */,
 				E03C6D7A2913F93D00B9D775 /* Movie_InformerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -272,11 +345,12 @@
 				DEVELOPMENT_TEAM = 34J2M9FNPA;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Movie-Informer-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -301,11 +375,12 @@
 				DEVELOPMENT_TEAM = 34J2M9FNPA;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Movie-Informer-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -341,6 +416,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E03C6D872913FCE000B9D775 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.32.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E03C6D882913FCE000B9D775 /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E03C6D872913FCE000B9D775 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = Realm;
+		};
+		E03C6D8A2913FCE000B9D775 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E03C6D872913FCE000B9D775 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E03C6D6E2913F93D00B9D775 /* Project object */;
 }
