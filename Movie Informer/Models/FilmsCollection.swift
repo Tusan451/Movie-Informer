@@ -5,16 +5,16 @@
 //  Created by Olegio on 07.11.2022.
 //
 
-import SwiftUI
+import Foundation
 
 struct FilmsCollection: Identifiable {
-    let id: Int
-    let image: String
-    let title: String
-    let filmsCount: Int
-    let viewed: Int
+    var id: Int
+    var image: String
+    var title: String
+    var filmsCount: Int
+    var viewed: Int
     
-    static func getFilmsCollections() -> [FilmsCollection] {
+    static func getFilmsCollection() -> [FilmsCollection] {
         return [
             FilmsCollection(
                 id: 1,

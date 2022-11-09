@@ -24,6 +24,7 @@ struct FilmsCollectionCellView: View {
                     .font(.custom("Inter-SemiBold", size: 16))
                     .foregroundColor(Color("Text Main"))
                     .frame(width: 130, alignment: .leading)
+                    .multilineTextAlignment(.leading)
             }
             
             HStack(spacing: 8) {

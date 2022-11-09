@@ -8,9 +8,28 @@
 import SwiftUI
 
 struct HomeView: View {
-    let filmsCollections = FilmsCollection.getFilmsCollections()
+    let filmsCollections = FilmsCollection.getFilmsCollection()
     
     var body: some View {
+//        NavigationView {
+//            ZStack {
+//                Color("Back Main")
+//                    .ignoresSafeArea()
+//                ScrollView {
+//                    VStack {
+//                        ForEach(filmsCollections) { collection in
+//                            FilmsCollectionCellView(
+//                                imageName: collection.image,
+//                                title: collection.title,
+//                                filmsCount: collection.filmsCount,
+//                                viewed: collection.viewed
+//                            )
+//                        }
+//                    }
+//                }
+//                .navigationTitle("Подборки")
+//            }
+//        }
         NavigationView {
             ZStack {
                 Color("Back Main")
@@ -18,18 +37,22 @@ struct HomeView: View {
                 ScrollView {
                     VStack {
                         ForEach(filmsCollections) { collection in
-                            FilmsCollectionCellView(
-                                imageName: collection.image,
-                                title: collection.title,
-                                filmsCount: collection.filmsCount,
-                                viewed: collection.viewed
-                            )
+                            NavigationLink(
+                                destination: FilmsCollectionView(filmsCollection: collection)) {
+                                    FilmsCollectionCellView(
+                                        imageName: collection.image,
+                                        title: collection.title,
+                                        filmsCount: collection.filmsCount,
+                                        viewed: collection.viewed
+                                    )
+                                }
                         }
                     }
                 }
                 .navigationTitle("Подборки")
             }
         }
+        .tint(Color("Secondary Accent"))
     }
 }
 
