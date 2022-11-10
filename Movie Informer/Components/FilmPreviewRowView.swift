@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct FilmPreviewRowView: View {
+    
+    
     let image: String
     let position: Int
     let title: String

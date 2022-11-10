@@ -8,12 +8,14 @@
 import Foundation
 
 struct FilmResponce: Codable {
+    var pagesCount: Int
     var films: [FilmBaseData]
 }
 
 struct FilmBaseData: Codable {
+    var filmId: Int
     var nameRu: String
-    var nameEn: String
+    var nameEn: String?
     var year: String
     var filmLength: String
     var countries: [FilmCountry]

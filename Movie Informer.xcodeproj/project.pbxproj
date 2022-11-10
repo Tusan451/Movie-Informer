@@ -15,7 +15,8 @@
 		E03C6D8B2913FCE000B9D775 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E03C6D8A2913FCE000B9D775 /* RealmSwift */; };
 		E056D7BE291BF11F00CE2C5A /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E056D7BD291BF11F00CE2C5A /* NetworkService.swift */; };
 		E056D7C0291BF62200CE2C5A /* FilmResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = E056D7BF291BF62200CE2C5A /* FilmResponce.swift */; };
-		E056D7C2291BF85600CE2C5A /* NetworkDataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E056D7C1291BF85600CE2C5A /* NetworkDataFetcher.swift */; };
+		E056D7C4291C064300CE2C5A /* URLExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E056D7C3291C064300CE2C5A /* URLExtension.swift */; };
+		E056D7C6291C0B5600CE2C5A /* FilmsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E056D7C5291C0B5600CE2C5A /* FilmsViewModel.swift */; };
 		E05EE66F291AC063006856AE /* FilmPreviewRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E05EE66E291AC063006856AE /* FilmPreviewRowView.swift */; };
 		E080501A291AB59500DF7F6C /* FilmPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0805019291AB59500DF7F6C /* FilmPreview.swift */; };
 		E082AF82291A8E7000F78A68 /* FilmsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E082AF81291A8E7000F78A68 /* FilmsCollectionView.swift */; };
@@ -44,7 +45,8 @@
 		E03C6D802913F93E00B9D775 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E056D7BD291BF11F00CE2C5A /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		E056D7BF291BF62200CE2C5A /* FilmResponce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmResponce.swift; sourceTree = "<group>"; };
-		E056D7C1291BF85600CE2C5A /* NetworkDataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkDataFetcher.swift; sourceTree = "<group>"; };
+		E056D7C3291C064300CE2C5A /* URLExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLExtension.swift; sourceTree = "<group>"; };
+		E056D7C5291C0B5600CE2C5A /* FilmsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsViewModel.swift; sourceTree = "<group>"; };
 		E05EE66E291AC063006856AE /* FilmPreviewRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmPreviewRowView.swift; sourceTree = "<group>"; };
 		E0805019291AB59500DF7F6C /* FilmPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmPreview.swift; sourceTree = "<group>"; };
 		E082AF81291A8E7000F78A68 /* FilmsCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsCollectionView.swift; sourceTree = "<group>"; };
@@ -127,7 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				E056D7BD291BF11F00CE2C5A /* NetworkService.swift */,
-				E056D7C1291BF85600CE2C5A /* NetworkDataFetcher.swift */,
+				E056D7C5291C0B5600CE2C5A /* FilmsViewModel.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -147,6 +149,7 @@
 			children = (
 				E0A02AAB29191C8F00CD89EB /* Extension View + CornerRadius.swift */,
 				E0A02AAF291928BF00CD89EB /* ViewRouter.swift */,
+				E056D7C3291C064300CE2C5A /* URLExtension.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -262,11 +265,12 @@
 				E0A02AB0291928BF00CD89EB /* ViewRouter.swift in Sources */,
 				E03C6D7C2913F93D00B9D775 /* ContentView.swift in Sources */,
 				E0A02AA8291912E300CD89EB /* CustomTabBarItem.swift in Sources */,
+				E056D7C4291C064300CE2C5A /* URLExtension.swift in Sources */,
 				E05EE66F291AC063006856AE /* FilmPreviewRowView.swift in Sources */,
 				E056D7BE291BF11F00CE2C5A /* NetworkService.swift in Sources */,
-				E056D7C2291BF85600CE2C5A /* NetworkDataFetcher.swift in Sources */,
 				E0A02AAE2919228B00CD89EB /* HomeView.swift in Sources */,
 				E082AF84291A91AD00F78A68 /* FilmsCollectionHeaderView.swift in Sources */,
+				E056D7C6291C0B5600CE2C5A /* FilmsViewModel.swift in Sources */,
 				E08CC4B729195448000EFACF /* FilmsCollectionCellView.swift in Sources */,
 				E0A02AAC29191C8F00CD89EB /* Extension View + CornerRadius.swift in Sources */,
 				E03C6D7A2913F93D00B9D775 /* Movie_InformerApp.swift in Sources */,
