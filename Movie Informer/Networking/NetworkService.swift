@@ -15,49 +15,68 @@ enum NetworkError: Error {
 
 class NetworkService {
     
-//    func request(urlString: String, completion: @escaping (Result<Data, Error>) -> Void) {
-//        guard let url = URL(string: urlString) else { return }
+//    var filmsResponce: FilmResponce?
+//
+//    func fetchData(from urlString: String) {
+//        guard let url = URL(string: urlString) else {
+//            print("Invalid URL")
+//            return
+//        }
 //
 //        var request = URLRequest(url: url)
 //        request.httpMethod = "GET"
-//        request.addValue("X-API-KEY", forHTTPHeaderField: "6436b8a3-54c4-487f-963c-ad9773c07c76")
-//        request.addValue("Content-Type", forHTTPHeaderField: "application/json")
+//        request.addValue("6436b8a3-54c4-487f-963c-ad9773c07c76", forHTTPHeaderField: "X-API-KEY")
+//        request.addValue("application/json", forHTTPHeaderField: "accept")
 //
 //        URLSession.shared.dataTask(with: request) { data, responce, error in
-//            DispatchQueue.main.async {
-//                if let error = error {
-//                    print("Error: \(error.localizedDescription)")
-//                    completion(.failure(error))
-//                    return
+//            if let data = data {
+//                do {
+//                    let decodedResponce = try JSONDecoder().decode(FilmResponce.self, from: data)
+//                    DispatchQueue.main.async {
+//                        self.filmsResponce = decodedResponce
+//                    }
+//                } catch let DecodingError.dataCorrupted(context) {
+//                    print(context)
+//                } catch let DecodingError.keyNotFound(key, context) {
+//                    print("Key '\(key)' not found:", context.debugDescription)
+//                    print("codingPath:", context.codingPath)
+//                } catch let DecodingError.valueNotFound(value, context) {
+//                    print("Value '\(value)' not found:", context.debugDescription)
+//                    print("codingPath:", context.codingPath)
+//                } catch let DecodingError.typeMismatch(type, context) {
+//                    print("Type '\(type)' mismatch:", context.debugDescription)
+//                    print("codingPath:", context.codingPath)
+//                } catch {
+//                    print("error: ", error)
 //                }
-//                guard let data = data else { return }
-//                completion(.success(data))
+//                return
 //            }
-//        }
-//        .resume()
+//        }.resume()
 //    }
     
-    func requestFilmsData(completion: @escaping (Result<[FilmBaseData]?, NetworkError>) -> Void) {
-        
-        guard let url = URL.filmsDataURL() else {
+    func requestFilmsData(urlString: String, completion: @escaping (Result<FilmResponce?, NetworkError>) -> Void) {
+
+        guard let url = URL(string: urlString) else {
             return completion(.failure(.badURL))
         }
-        
+
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        request.addValue("X-API-KEY", forHTTPHeaderField: "6436b8a3-54c4-487f-963c-ad9773c07c76")
-        request.addValue("Content-Type", forHTTPHeaderField: "application/json")
-        
+        request.addValue("6436b8a3-54c4-487f-963c-ad9773c07c76", forHTTPHeaderField: "X-API-KEY")
+        request.addValue("application/json", forHTTPHeaderField: "accept")
+
         URLSession.shared.dataTask(with: request) { data, responce, error in
             guard let data = data, error == nil else {
                 return completion(.failure(.noData))
             }
             let filmsResponce = try? JSONDecoder().decode(FilmResponce.self, from: data)
             if let filmsResponce = filmsResponce {
-                completion(.success(filmsResponce.films))
+                completion(.success(filmsResponce))
             } else {
                 completion(.failure(.decodingError))
             }
         }.resume()
     }
 }
+
+

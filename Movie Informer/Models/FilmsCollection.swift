@@ -19,7 +19,7 @@ struct FilmsCollection: Identifiable {
         return [
             FilmsCollection(
                 id: 1,
-                urlString: "https://kinopoiskapiunofficial.tech/api/v2.2/films/top?type=TOP_250_BEST_FILMS&page=1",
+                urlString: "https://kinopoiskapiunofficial.tech/api/v2.2/films/top?type=TOP_250_BEST_FILMS&page=",
                 image: "250 лучших фильмов",
                 title: "250 лучших фильмов",
                 filmsCount: 250,
@@ -27,7 +27,7 @@ struct FilmsCollection: Identifiable {
             ),
             FilmsCollection(
                 id: 2,
-                urlString: "https://kinopoiskapiunofficial.tech/api/v2.2/films/top?type=TOP_250_BEST_FILMS&page=1",
+                urlString: "https://kinopoiskapiunofficial.tech/api/v2.2/films/top?type=TOP_100_POPULAR_FILMS&page=",
                 image: "100 популярных фильмов",
                 title: "100 популярных фильмов",
                 filmsCount: 100,

@@ -20,7 +20,7 @@ struct FilmBaseData: Codable {
     var filmLength: String
     var countries: [FilmCountry]
     var genres: [Genre]
-    var rating: String
+    var rating: String?
     var ratingVoteCount: Int
     var posterUrl: String
 }

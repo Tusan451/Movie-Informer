@@ -9,6 +9,8 @@ import SwiftUI
 
 struct FilmsCollectionView: View {
     let filmsCollection: FilmsCollection
+    @State private var currentPage = 1
+    @State private var pagesCount = 0
     @State private var films = [FilmBaseData]()
     
     var body: some View {
@@ -24,19 +26,24 @@ struct FilmsCollectionView: View {
                         viewed: filmsCollection.viewed
                     )
                     
-                    ForEach(films, id:\.filmId) { film in
-                        NavigationLink(destination: FilmInfoView()) {
-                            FilmPreviewRowView(
-                                image: film.posterUrl,
-                                position: 1,
-                                title: film.nameRu,
-                                titleEn: film.nameEn ?? "",
-                                length: film.filmLength,
-                                genre: film.genres.description,
-                                year: film.year,
-                                rating: film.rating,
-                                votesCount: film.ratingVoteCount
-                            )
+                    LazyVStack {
+                        ForEach(films, id:\.filmId) { film in
+                            NavigationLink(destination: FilmInfoView()) {
+                                FilmPreviewRowView(
+                                    image: film.posterUrl,
+                                    position: 1,
+                                    title: film.nameRu,
+                                    titleEn: film.nameEn ?? "",
+                                    length: film.filmLength,
+                                    genre: film.genres.description,
+                                    year: film.year,
+                                    rating: film.rating ?? "0",
+                                    votesCount: film.ratingVoteCount
+                                )
+                            }
+                            .onAppear {
+                                loadMoreContent(CurrentFilm: film)
+                            }
                         }
                     }
                     .navigationTitle("Фильмы")
@@ -44,28 +51,64 @@ struct FilmsCollectionView: View {
                 }
             }
             .task {
-                await loadData()
+                loadFilms()
             }
         }
     }
+}
+
+struct FilmsCollectionView_Previews: PreviewProvider {
+    static var previews: some View {
+        FilmsCollectionView(
+            filmsCollection: FilmsCollection(
+                id: 1,
+                urlString: "https://kinopoiskapiunofficial.tech/api/v2.2/films/top?type=TOP_250_BEST_FILMS&page=",
+                image: "250 лучших фильмов",
+                title: "250 лучших фильмов",
+                filmsCount: 250,
+                viewed: 15
+            )
+        )
+    }
+}
+
+
+extension FilmsCollectionView {
     
-    func loadData() async {
-        guard let url = URL(string: filmsCollection.urlString) else {
+    func loadMoreContent(CurrentFilm film: FilmBaseData?) {
+        
+        guard currentPage < 4 else { return }
+        
+        guard let film = film else { return }
+        
+        let thresholdIndex = films.index(films.endIndex, offsetBy: -1)
+        
+        if films.firstIndex(where: { $0.filmId == film.filmId}) == thresholdIndex {
+            loadFilms()
+        }
+        
+    }
+    
+    private func loadFilms() {
+        
+        guard let url = URL(string: filmsCollection.urlString + "\(currentPage)") else {
             print("Invalid URL")
             return
         }
-        
+
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.addValue("6436b8a3-54c4-487f-963c-ad9773c07c76", forHTTPHeaderField: "X-API-KEY")
         request.addValue("application/json", forHTTPHeaderField: "accept")
-        
+
         URLSession.shared.dataTask(with: request) { data, responce, error in
             if let data = data {
                 do {
                     let decodedResponce = try JSONDecoder().decode(FilmResponce.self, from: data)
                     DispatchQueue.main.async {
-                        self.films = decodedResponce.films
+                        self.films += decodedResponce.films
+                        self.pagesCount = decodedResponce.pagesCount
+                        self.currentPage += 1
                     }
                 } catch let DecodingError.dataCorrupted(context) {
                     print(context)
@@ -84,20 +127,5 @@ struct FilmsCollectionView: View {
                 return
             }
         }.resume()
-    }
-}
-
-struct FilmsCollectionView_Previews: PreviewProvider {
-    static var previews: some View {
-        FilmsCollectionView(
-            filmsCollection: FilmsCollection(
-                id: 1,
-                urlString: "https://kinopoiskapiunofficial.tech/api/v2.2/films/top?type=TOP_250_BEST_FILMS&page=1",
-                image: "250 лучших фильмов",
-                title: "250 лучших фильмов",
-                filmsCount: 250,
-                viewed: 15
-            )
-        )
     }
 }
