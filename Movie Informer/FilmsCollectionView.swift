@@ -25,19 +25,19 @@ struct FilmsCollectionView: View {
                         filmsCount: filmsCollection.filmsCount,
                         viewed: filmsCollection.viewed
                     )
-                    
                     LazyVStack {
-                        ForEach(films, id:\.filmId) { film in
+                        ForEach(Array(films.enumerated()), id: \.offset) { (index, film) in
                             NavigationLink(destination: FilmInfoView()) {
                                 FilmPreviewRowView(
                                     image: film.posterUrl,
-                                    position: 1,
+                                    position: index + 1,
                                     title: film.nameRu,
-                                    titleEn: film.nameEn ?? "",
+                                    titleEn: film.nameEn,
                                     length: film.filmLength,
-                                    genre: film.genres.description,
+                                    countries: film.countries,
+                                    genres: film.genres,
                                     year: film.year,
-                                    rating: film.rating ?? "0",
+                                    rating: film.rating,
                                     votesCount: film.ratingVoteCount
                                 )
                             }
@@ -46,13 +46,13 @@ struct FilmsCollectionView: View {
                             }
                         }
                     }
-                    .navigationTitle("Фильмы")
-                    .navigationBarTitleDisplayMode(.inline)
                 }
+                .navigationTitle("Фильмы")
+                .navigationBarTitleDisplayMode(.inline)
             }
-            .task {
-                loadFilms()
-            }
+        }
+        .task {
+            loadFilms()
         }
     }
 }
@@ -127,5 +127,9 @@ extension FilmsCollectionView {
                 return
             }
         }.resume()
+    }
+    
+    private func calculateFilmPosition() {
+        
     }
 }

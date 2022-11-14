@@ -9,16 +9,18 @@ import SwiftUI
 
 struct FilmPreviewRowView: View {
     
-    
     let image: String
     let position: Int
     let title: String
-    let titleEn: String
+    let titleEn: String?
     let length: String
-    let genre: String
+    let countries: [FilmCountry]
+    let genres: [Genre]
     let year: String
-    let rating: String
+    let rating: String?
     let votesCount: Int
+    
+    var genresText = ""
     
     var imageUrl: URL {
         return URL(string: image)!
@@ -56,38 +58,57 @@ struct FilmPreviewRowView: View {
                             .multilineTextAlignment(.leading)
                         
                         VStack(spacing: 2) {
-                            Text("\(titleEn), \(year) г.")
+                            Text("\(enTitleAndYear(enTitle: titleEn , year: year))")
                                 .font(.custom("Inter-Regular", size: 12))
                                 .foregroundColor(Color("Text Main"))
                                 .frame(width: 160, alignment: .leading)
                                 .multilineTextAlignment(.leading)
                             
-                            Text(length)
+                            Text(convertLength(length: length))
                                 .font(.custom("Inter-Regular", size: 12))
                                 .foregroundColor(Color("Text Main"))
                                 .frame(width: 160, alignment: .leading)
                                 .multilineTextAlignment(.leading)
                         }
                         
-                        Text(genre)
+                        Text(setCountryAndGenres(countries: countries, genres: genres))
                             .font(.custom("Inter-Medium", size: 12))
                             .foregroundColor(Color("Text Secondary"))
                             .frame(width: 160, alignment: .leading)
                             .multilineTextAlignment(.leading)
+                        
                     }
                     .frame(width: 160, height: 105, alignment: .topLeading)
                 }
                 
                 VStack(spacing: 4) {
-                    Text(rating)
-                        .font(.custom("Inter-Semibold", size: 16))
-                        .foregroundColor(Color("Green Accent"))
-                        .frame(width: 60, alignment: .trailing)
                     
-                    Text("\(votesCount)")
-                        .font(.custom("Inter-Regular", size: 12))
-                        .foregroundColor(Color("Red Accent"))
-                        .frame(width: 60, alignment: .trailing)
+                    if let rating = rating, votesCount != 0 {
+                        Text(rating)
+                            .font(.custom("Inter-Semibold", size: 16))
+                            .foregroundColor(setColorForRating(rating: rating))
+                            .frame(width: 60, alignment: .trailing)
+                        
+                        Text("\(votesCount)")
+                            .font(.custom("Inter-Regular", size: 12))
+                            .foregroundColor(Color("Red Accent"))
+                            .frame(width: 60, alignment: .trailing)
+                    } else if let rating = rating, votesCount == 0 {
+                        Text(rating)
+                            .font(.custom("Inter-Semibold", size: 16))
+                            .foregroundColor(setColorForRating(rating: rating))
+                            .frame(width: 60, alignment: .trailing)
+                    } else if rating == nil && votesCount == 0 {
+                        Text(" ")
+                            .font(.custom("Inter-Regular", size: 12))
+                            .foregroundColor(Color("Red Accent"))
+                            .frame(width: 60, alignment: .trailing)
+                    } else {
+                        Text("\(votesCount)")
+                            .font(.custom("Inter-Regular", size: 12))
+                            .foregroundColor(Color("Red Accent"))
+                            .frame(width: 60, alignment: .trailing)
+                    }
                 }
                 .frame(width: 60, height: 105, alignment: .topTrailing)
             }
@@ -109,10 +130,72 @@ struct FilmPreviewRowView_Previews: PreviewProvider {
             title: "Зеленая миля",
             titleEn: "The Green Mile",
             length: "03:09",
-            genre: "драма, криминал",
+            countries: [FilmCountry(country: "США")],
+            genres: [Genre(genre: "драма"), Genre(genre: "криминал"), Genre(genre: "приключения")],
             year: "1999",
             rating: "9.1",
-            votesCount: 813305
+            votesCount: 456789
         )
+    }
+}
+
+
+extension FilmPreviewRowView {
+    
+    private func setCountryAndGenres(countries: [FilmCountry], genres: [Genre]) -> String {
+        var text = ""
+        
+        for country in countries {
+            text += country.country + ", "
+        }
+        
+        for genre in genres {
+            text += genre.genre + ", "
+        }
+        
+        text.removeLast()
+        text.removeLast()
+        
+        return text
+    }
+    
+    private func enTitleAndYear(enTitle: String?, year: String) -> String {
+        var text = ""
+        
+        if let enTitle = enTitle {
+            text = "\(enTitle), \(year) г."
+        } else {
+            text = "\(year) г."
+        }
+        
+        return text
+    }
+    
+    private func setColorForRating(rating: String) -> Color {
+        var color: Color
+        
+        switch rating.first {
+        case "9":
+            color = Color("Secondary Accent")
+        case "7", "8":
+            color = Color("Green Accent")
+        default:
+            color = Color("Text Secondary")
+        }
+        
+        return color
+    }
+    
+    private func convertLength(length: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        
+        guard let date = dateFormatter.date(from: length) else { return length }
+        
+        let calendar = Calendar.current
+        let minutes = calendar.component(.minute, from: date)
+        let hours = calendar.component(.hour, from: date)
+        
+        return "\(hours * 60 + minutes) мин."
     }
 }
