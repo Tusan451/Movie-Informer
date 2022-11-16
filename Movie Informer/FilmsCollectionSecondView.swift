@@ -1,13 +1,13 @@
 //
-//  FilmsCollectionView.swift
+//  FilmsCollectionSecondView.swift
 //  Movie Informer
 //
-//  Created by Olegio on 08.11.2022.
+//  Created by Olegio on 15.11.2022.
 //
 
 import SwiftUI
 
-struct FilmsCollectionView: View {
+struct FilmsCollectionSecondView: View {
     let filmsCollection: FilmsCollection
     @State private var currentPage = 1
     @State private var pagesCount = 0
@@ -29,7 +29,7 @@ struct FilmsCollectionView: View {
                     LazyVStack {
                         if filmsTop.count != 0 {
                             ForEach(Array(filmsTop.enumerated()), id: \.offset) { (index, film) in
-                                NavigationLink(destination: FilmInfoView(film: film)) {
+                                NavigationLink(destination: FilmInfoView()) {
                                     FilmPreviewRowView(
                                         image: film.posterUrl,
                                         position: index + 1,
@@ -50,15 +50,17 @@ struct FilmsCollectionView: View {
                         } else {
                             ForEach(Array(filmsGenre.enumerated()), id: \.offset) { (index, filmGenre) in
                                 NavigationLink(destination: FilmInfoView()) {
-                                    FilmSecondPreviewRowView(
+                                    FilmPreviewRowView(
                                         image: filmGenre.posterUrl,
                                         position: index + 1,
                                         title: filmGenre.nameRu ?? filmGenre.nameOriginal ?? "",
                                         titleEn: filmGenre.nameOriginal,
+                                        length: "",
                                         countries: filmGenre.countries,
                                         genres: filmGenre.genres,
-                                        year: filmGenre.year,
-                                        rating: filmGenre.ratingKinopoisk
+                                        year: setYear(year: filmGenre.year),
+                                        rating: "",
+                                        votesCount: 0
                                     )
                                 }
                                 .onAppear {
@@ -78,9 +80,9 @@ struct FilmsCollectionView: View {
     }
 }
 
-struct FilmsCollectionView_Previews: PreviewProvider {
+struct FilmsCollectionSecondView_Previews: PreviewProvider {
     static var previews: some View {
-        FilmsCollectionView(
+        FilmsCollectionSecondView(
             filmsCollection: FilmsCollection(
                 id: 1,
                 urlString: "https://kinopoiskapiunofficial.tech/api/v2.2/films/top?type=TOP_250_BEST_FILMS&page=",
@@ -94,7 +96,7 @@ struct FilmsCollectionView_Previews: PreviewProvider {
 }
 
 
-extension FilmsCollectionView {
+extension FilmsCollectionSecondView {
     
     func loadMoreContentForTopCollection(CurrentFilm film: FilmBaseData?) {
         

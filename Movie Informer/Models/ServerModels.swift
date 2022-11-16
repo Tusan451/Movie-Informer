@@ -1,36 +1,36 @@
 //
-//  FilmResponce.swift
+//  ServerModels.swift
 //  Movie Informer
 //
-//  Created by Olegio on 09.11.2022.
+//  Created by Olegio on 15.11.2022.
 //
 
 import Foundation
 
 // Model for top films collections
-struct FilmResponce: Codable {
+struct TopFilmsCollection: Codable {
     var pagesCount: Int
-    var films: [FilmBaseData]
+    var films: [TopFilmData]
 }
 
-struct FilmBaseData: Codable {
+struct TopFilmData: Codable {
     var filmId: Int
     var nameRu: String
     var nameEn: String?
     var year: String
     var filmLength: String
-    var countries: [FilmCountry]
-    var genres: [Genre]
+    var countries: [CountryTop]
+    var genres: [GenrTop]
     var rating: String?
     var ratingVoteCount: Int
     var posterUrl: String
 }
 
-struct FilmCountry: Codable {
+struct CountryTop: Codable {
     var country: String
 }
 
-struct Genre: Codable {
+struct GenrTop: Codable {
     var genre: String
 }
 
@@ -57,15 +57,4 @@ struct CountryGenre: Codable {
 
 struct GenreGenre: Codable {
     var genre: String
-}
-
-// Model for trailers
-struct FilmTrailers: Codable {
-    var items: [FilmTrailer]
-}
-
-struct FilmTrailer: Codable {
-    var url: String
-    var name: String
-    var site: String
 }

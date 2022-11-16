@@ -11,25 +11,6 @@ struct HomeView: View {
     let filmsCollections = FilmsCollection.getFilmsCollection()
     
     var body: some View {
-//        NavigationView {
-//            ZStack {
-//                Color("Back Main")
-//                    .ignoresSafeArea()
-//                ScrollView {
-//                    VStack {
-//                        ForEach(filmsCollections) { collection in
-//                            FilmsCollectionCellView(
-//                                imageName: collection.image,
-//                                title: collection.title,
-//                                filmsCount: collection.filmsCount,
-//                                viewed: collection.viewed
-//                            )
-//                        }
-//                    }
-//                }
-//                .navigationTitle("Подборки")
-//            }
-//        }
         NavigationView {
             ZStack {
                 Color("Back Main")
@@ -47,6 +28,9 @@ struct HomeView: View {
                                     )
                                 }
                         }
+                        Rectangle()
+                            .foregroundColor(Color("Back Main"))
+                            .frame(width: UIScreen.main.bounds.width, height: 60)
                     }
                 }
                 .navigationTitle("Подборки")
