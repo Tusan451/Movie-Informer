@@ -44,6 +44,7 @@ struct CustomTabBar: View {
                 )
             }
             .frame(width: UIScreen.main.bounds.width - 50, height: UIScreen.main.bounds.height/12)
+            .offset(y: -7)
         }
     }
 }

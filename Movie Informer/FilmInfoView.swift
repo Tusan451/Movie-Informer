@@ -16,6 +16,11 @@ struct FilmInfoView: View {
     @State private var addedInViewed = false
     
     @State private var filmTrailers = [FilmTrailer]()
+    @State private var filmInfoById: FilmInfoById? = nil
+    @State private var filmBoxOffice = [BoxOfficeItem]()
+    @State private var filmTeam = [FilmTeamate]()
+    @State private var actors = [FilmTeamate]()
+    @State private var similarFilms = [SimilarFilm]()
     
     var body: some View {
         if let film = film {
@@ -34,7 +39,7 @@ struct FilmInfoView: View {
                                 length: film.filmLength,
                                 countries: film.countries,
                                 genres: film.genres,
-                                ageLimit: "16+"
+                                ageLimit: setAgeLimit()
                             )
                             
                             ButtonView(
@@ -52,15 +57,30 @@ struct FilmInfoView: View {
                                     ZStack {
                                         Color(.black)
                                             .ignoresSafeArea()
-                                        TrailerView(urlString: checkTrailers())
+                                        if checkTrailers() {
+                                            TrailerView(urlString: trailerUrl())
+                                        } else {
+                                            VStack(spacing: 12) {
+                                                Image(systemName: "xmark.circle")
+                                                    .resizable()
+                                                    .frame(width: 32, height: 32)
+                                                    .foregroundColor(Color("Red Accent"))
+                                                
+                                                Text("Trailer not found")
+                                                    .font(.custom("Inter-Bold", size: 26))
+                                                .foregroundColor(.white)
+                                            }
+                                        }
                                     }
                                 }
                             
-                            Text("\"" + "Пол Эджкомб не верил в чудеса. Пока не столкнулся с одним из них" + "\"")
-                                .font(.custom("Inter-Regular", size: 14))
-                                .foregroundColor(Color("Text Secondary"))
-                                .frame(width: UIScreen.main.bounds.width - 40, alignment: .center)
-                                .multilineTextAlignment(.center)
+                            if haveSlogan() {
+                                Text("\"" + (filmInfoById?.slogan)! + "\"")
+                                    .font(.custom("Inter-Regular", size: 14))
+                                    .foregroundColor(Color("Text Secondary"))
+                                    .frame(width: UIScreen.main.bounds.width - 40, alignment: .center)
+                                    .multilineTextAlignment(.center)
+                            }
                             
                             HStack {
                                 ButtonView(
@@ -93,17 +113,17 @@ struct FilmInfoView: View {
                         
                         AboutFilmView(
                             title: "О фильме",
-                            description: "Пол Эджкомб — начальник блока смертников в тюрьме «Холодная гора», каждый из узников которого однажды проходит «зеленую милю» по пути к месту казни. Пол повидал много заключённых и надзирателей за время работы. Однако гигант Джон Коффи, обвинённый в страшном преступлении, стал одним из самых необычных обитателей блока.",
-                            year: 1999,
-                            countries: ["США"],
-                            genres: ["драма", "криминал"],
-                            director: "Фрэнк Дарабонт",
-                            scenario: ["Фрэнк Дарабонт", "Стивен Кинг"],
-                            producer: ["Фрэнк Дарабонт", "Дэвид Валдес"],
-                            videoMaker: ["Дэвид Тэттерсолл"],
-                            budget: 60_000_000,
-                            world: 286_801_374,
-                            ageLimit: "16+"
+                            description: haveDescription() ? filmInfoById?.description : nil,
+                            year: film.year,
+                            countries: film.countries,
+                            genres: film.genres,
+                            director: setDirector(),
+                            scenario: setScenario(),
+                            producer: setProducer(),
+                            videoMaker: setVideoMakers(),
+                            budget: setBudget(),
+                            world: setAmount(),
+                            ageLimit: setAgeLimit()
                         )
                         
                         Divider()
@@ -114,29 +134,48 @@ struct FilmInfoView: View {
                             .font(.custom("Inter-Bold", size: 20))
                             .frame(width: UIScreen.main.bounds.width - 40, alignment: .leading)
                         
-                        ActorsView(
-                            imageUrl: "https://kinopoiskapiunofficial.tech/images/actor_posters/kp/9144.jpg",
-                            name: "Том Хэнкс",
-                            description: "Paul Edgecomb"
-                        )
+                        LazyVStack(spacing: 20) {
+                            ForEach(actors.prefix(10), id: \.staffId) { item in
+                                ActorsView(
+                                    imageUrl: item.posterUrl,
+                                    name: item.nameRu.isEmpty ? item.nameEn : item.nameRu,
+                                    description: item.description
+                                )
+                            }
+                        }
                         
                         Divider()
                             .overlay(Color("Back Secondary"))
                             .frame(width: UIScreen.main.bounds.width - 40)
                         
-                        Text("Похожие фильмы")
-                            .font(.custom("Inter-Bold", size: 20))
-                            .frame(width: UIScreen.main.bounds.width - 40, alignment: .leading)
-                        
-                        SimilarFilmsView(
-                            imageUrl: "https://kinopoiskapiunofficial.tech/images/posters/kp/326.jpg",
-                            titleRu: "Побег из Шоушенка",
-                            titleEn: "The Shawshank Redemption"
-                        )
+                        if !similarFilms.isEmpty {
+                            Text("Похожие фильмы")
+                                .font(.custom("Inter-Bold", size: 20))
+                                .frame(width: UIScreen.main.bounds.width - 40, alignment: .leading)
+                            
+                            LazyVStack(spacing: 20) {
+                                ForEach(similarFilms, id: \.filmId) { film in
+                                    SimilarFilmsView(
+                                        imageUrl: film.posterUrl,
+                                        titleRu: film.nameRu,
+                                        titleEn: film.nameEn
+                                    )
+                                }
+                            }
+                            Rectangle()
+                                .foregroundColor(Color("Back Main"))
+                                .frame(width: UIScreen.main.bounds.width, height: 60)
+                        }
                     }
                     .navigationTitle("О фильме")
                     .navigationBarTitleDisplayMode(.inline)
                 }
+            }
+            .task {
+                loadFilmInfoById()
+                loadFilmBoxOffice()
+                loadFilmTeam()
+                loadSimilarFilms()
             }
         }
     }
@@ -165,7 +204,7 @@ extension FilmInfoView {
     private func loadTrailers() {
         guard let film = film else { return }
         
-        guard let url = URL(string: ServerUrlStrings.trailers.rawValue + "\(film.filmId)/videos") else {
+        guard let url = URL(string: ServerUrlStrings.baseUrl.rawValue + "\(film.filmId)/videos") else {
             print("Invalid URL")
             return
         }
@@ -201,7 +240,164 @@ extension FilmInfoView {
         }.resume()
     }
     
-    private func checkTrailers() -> String {
+    private func loadFilmInfoById() {
+        guard let film = film else { return }
+        
+        guard let url = URL(string: ServerUrlStrings.baseUrl.rawValue + "\(film.filmId)") else {
+            print("Invalid URL")
+            return
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.addValue("6436b8a3-54c4-487f-963c-ad9773c07c76", forHTTPHeaderField: "X-API-KEY")
+        request.addValue("application/json", forHTTPHeaderField: "accept")
+        
+        URLSession.shared.dataTask(with: request) { data, responce, error in
+            if let data = data {
+                do {
+                    let decodedResponce = try JSONDecoder().decode(FilmInfoById.self, from: data)
+                    DispatchQueue.main.async {
+                        self.filmInfoById = decodedResponce
+                    }
+                } catch let DecodingError.dataCorrupted(context) {
+                    print(context)
+                } catch let DecodingError.keyNotFound(key, context) {
+                    print("Key '\(key)' not found:", context.debugDescription)
+                    print("codingPath:", context.codingPath)
+                } catch let DecodingError.valueNotFound(value, context) {
+                    print("Value '\(value)' not found:", context.debugDescription)
+                    print("codingPath:", context.codingPath)
+                } catch let DecodingError.typeMismatch(type, context) {
+                    print("Type '\(type)' mismatch:", context.debugDescription)
+                    print("codingPath:", context.codingPath)
+                } catch {
+                    print("error: ", error)
+                }
+                return
+            }
+        }.resume()
+    }
+    
+    private func loadFilmBoxOffice() {
+        guard let film = film else { return }
+        
+        guard let url = URL(string: ServerUrlStrings.baseUrl.rawValue + "\(film.filmId)/box_office") else {
+            print("Invalid URL")
+            return
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.addValue("6436b8a3-54c4-487f-963c-ad9773c07c76", forHTTPHeaderField: "X-API-KEY")
+        request.addValue("application/json", forHTTPHeaderField: "accept")
+        
+        URLSession.shared.dataTask(with: request) { data, responce, error in
+            if let data = data {
+                do {
+                    let decodedResponce = try JSONDecoder().decode(FilmBoxOffice.self, from: data)
+                    DispatchQueue.main.async {
+                        self.filmBoxOffice = decodedResponce.items
+                    }
+                } catch let DecodingError.dataCorrupted(context) {
+                    print(context)
+                } catch let DecodingError.keyNotFound(key, context) {
+                    print("Key '\(key)' not found:", context.debugDescription)
+                    print("codingPath:", context.codingPath)
+                } catch let DecodingError.valueNotFound(value, context) {
+                    print("Value '\(value)' not found:", context.debugDescription)
+                    print("codingPath:", context.codingPath)
+                } catch let DecodingError.typeMismatch(type, context) {
+                    print("Type '\(type)' mismatch:", context.debugDescription)
+                    print("codingPath:", context.codingPath)
+                } catch {
+                    print("error: ", error)
+                }
+                return
+            }
+        }.resume()
+    }
+    
+    private func loadFilmTeam() {
+        guard let film = film else { return }
+        
+        guard let url = URL(string: "https://kinopoiskapiunofficial.tech/api/v1/staff?filmId=\(film.filmId)") else {
+            print("Invalid URL")
+            return
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.addValue("6436b8a3-54c4-487f-963c-ad9773c07c76", forHTTPHeaderField: "X-API-KEY")
+        request.addValue("application/json", forHTTPHeaderField: "accept")
+        
+        URLSession.shared.dataTask(with: request) { data, responce, error in
+            if let data = data {
+                do {
+                    let decodedResponce = try JSONDecoder().decode([FilmTeamate].self, from: data)
+                    DispatchQueue.main.async {
+                        self.filmTeam = decodedResponce
+                        self.actors = filmTeam.filter { $0.professionKey.hasPrefix("ACTOR") }
+                    }
+                } catch let DecodingError.dataCorrupted(context) {
+                    print(context)
+                } catch let DecodingError.keyNotFound(key, context) {
+                    print("Key '\(key)' not found:", context.debugDescription)
+                    print("codingPath:", context.codingPath)
+                } catch let DecodingError.valueNotFound(value, context) {
+                    print("Value '\(value)' not found:", context.debugDescription)
+                    print("codingPath:", context.codingPath)
+                } catch let DecodingError.typeMismatch(type, context) {
+                    print("Type '\(type)' mismatch:", context.debugDescription)
+                    print("codingPath:", context.codingPath)
+                } catch {
+                    print("error: ", error)
+                }
+                return
+            }
+        }.resume()
+    }
+    
+    private func loadSimilarFilms() {
+        guard let film = film else { return }
+        
+        guard let url = URL(string: ServerUrlStrings.baseUrl.rawValue + "\(film.filmId)/similars") else {
+            print("Invalid URL")
+            return
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.addValue("6436b8a3-54c4-487f-963c-ad9773c07c76", forHTTPHeaderField: "X-API-KEY")
+        request.addValue("application/json", forHTTPHeaderField: "accept")
+        
+        URLSession.shared.dataTask(with: request) { data, responce, error in
+            if let data = data {
+                do {
+                    let decodedResponce = try JSONDecoder().decode(SimilarFilms.self, from: data)
+                    DispatchQueue.main.async {
+                        self.similarFilms = decodedResponce.items
+                    }
+                } catch let DecodingError.dataCorrupted(context) {
+                    print(context)
+                } catch let DecodingError.keyNotFound(key, context) {
+                    print("Key '\(key)' not found:", context.debugDescription)
+                    print("codingPath:", context.codingPath)
+                } catch let DecodingError.valueNotFound(value, context) {
+                    print("Value '\(value)' not found:", context.debugDescription)
+                    print("codingPath:", context.codingPath)
+                } catch let DecodingError.typeMismatch(type, context) {
+                    print("Type '\(type)' mismatch:", context.debugDescription)
+                    print("codingPath:", context.codingPath)
+                } catch {
+                    print("error: ", error)
+                }
+                return
+            }
+        }.resume()
+    }
+    
+    private func trailerUrl() -> String {
         var url = ""
         for trailer in filmTrailers {
             if trailer.site == "KINOPOISK_WIDGET" {
@@ -211,5 +407,136 @@ extension FilmInfoView {
         }
         print(filmTrailers.count)
         return url
+    }
+    
+    private func checkTrailers() -> Bool {
+        var checkTrailers = false
+        for trailer in filmTrailers {
+            if trailer.site == "KINOPOISK_WIDGET" {
+                checkTrailers.toggle()
+                break
+            }
+        }
+        print(filmTrailers.count)
+        return checkTrailers
+    }
+    
+    private func setAgeLimit() -> String? {
+        guard let filmInfoById = filmInfoById else { return nil }
+        guard var ageLimit = filmInfoById.ratingAgeLimits else { return nil }
+        
+        ageLimit.removeAll { character in
+            character == "a" || character == "g" || character == "e"
+        }
+        
+        return ageLimit + "+"
+    }
+    
+    private func haveSlogan() -> Bool {
+        guard let filmInfoById = filmInfoById else { return false }
+        guard let _ = filmInfoById.slogan else { return false }
+        
+        return true
+    }
+    
+    private func haveDescription() -> Bool {
+        guard let filmInfoById = filmInfoById else { return false }
+        guard let _ = filmInfoById.description else { return false }
+        
+        return true
+    }
+    
+    private func setBudget() -> Int {
+        var budget = 0
+        
+        for item in filmBoxOffice {
+            if item.type == "BUDGET" {
+                budget = item.amount
+            }
+        }
+        return budget
+    }
+    
+    private func setAmount() -> Int {
+        var amount = 0
+        
+        for item in filmBoxOffice {
+            if item.type == "RUS" || item.type == "WORLD" {
+                amount = item.amount
+            }
+        }
+        return amount
+    }
+    
+    private func setDirector() -> String {
+        guard !filmTeam.isEmpty else { return "" }
+        
+        var director = ""
+        
+        for teamate in filmTeam {
+            if teamate.professionKey == "DIRECTOR" {
+                if !teamate.nameRu.isEmpty {
+                    director = teamate.nameRu
+                } else {
+                    director = teamate.nameEn
+                }
+            }
+        }
+        
+        return director
+    }
+    
+    private func setScenario() -> [String] {
+        guard !filmTeam.isEmpty else { return [] }
+        
+        var scenarioTeam: [String] = []
+        
+        for teamate in filmTeam {
+            if teamate.professionKey == "WRITER" {
+                if !teamate.nameRu.isEmpty {
+                    scenarioTeam.append(teamate.nameRu)
+                } else {
+                    scenarioTeam.append(teamate.nameEn)
+                }
+            }
+        }
+        
+        return scenarioTeam
+    }
+    
+    private func setProducer() -> [String] {
+        guard !filmTeam.isEmpty else { return [] }
+        
+        var producers: [String] = []
+        
+        for producer in filmTeam {
+            if producer.professionKey == "PRODUCER" {
+                if !producer.nameRu.isEmpty {
+                    producers.append(producer.nameRu)
+                } else {
+                    producers.append(producer.nameEn)
+                }
+            }
+        }
+        
+        return producers
+    }
+    
+    private func setVideoMakers() -> [String] {
+        guard !filmTeam.isEmpty else { return [] }
+        
+        var videomakers: [String] = []
+        
+        for videomaker in filmTeam {
+            if videomaker.professionKey == "OPERATOR" {
+                if !videomaker.nameRu.isEmpty {
+                    videomakers.append(videomaker.nameRu)
+                } else {
+                    videomakers.append(videomaker.nameEn)
+                }
+            }
+        }
+        
+        return videomakers
     }
 }

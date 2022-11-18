@@ -8,7 +8,7 @@
 import Foundation
 
 enum ServerUrlStrings: String {
-    case trailers = "https://kinopoiskapiunofficial.tech/api/v2.2/films/"
+    case baseUrl = "https://kinopoiskapiunofficial.tech/api/v2.2/films/"
 }
 
 struct FilmsCollection: Identifiable {

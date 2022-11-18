@@ -36,11 +36,13 @@ struct SimilarFilmsView: View {
                     .frame(width: UIScreen.main.bounds.width / 1.5, alignment: .topLeading)
                     .multilineTextAlignment(.leading)
                 
-                Text(titleEn!)
-                    .font(.custom("Inter-Regular", size: 12))
-                    .foregroundColor(Color("Text Main"))
-                    .frame(width: UIScreen.main.bounds.width / 1.5, alignment: .leading)
-                    .multilineTextAlignment(.leading)
+                if let titleEn = titleEn {
+                    Text(titleEn)
+                        .font(.custom("Inter-Regular", size: 12))
+                        .foregroundColor(Color("Text Main"))
+                        .frame(width: UIScreen.main.bounds.width / 1.5, alignment: .leading)
+                        .multilineTextAlignment(.leading)
+                }
                 
             }
             .frame(width: UIScreen.main.bounds.width / 1.5, height: 105, alignment: .topLeading)

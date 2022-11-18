@@ -16,7 +16,7 @@ struct FilmInfoHeaderView: View {
     let length: String
     let countries: [FilmCountry]
     let genres: [Genre]
-    let ageLimit: String
+    let ageLimit: String?
     
     var body: some View {
         VStack(spacing: 12) {
@@ -74,7 +74,9 @@ struct FilmInfoHeaderView: View {
                         .frame(width: UIScreen.main.bounds.width - 40, alignment: .center)
                         .multilineTextAlignment(.center)
                     
-                    AgeLimitView(ageLimit: ageLimit)
+                    if let ageLimit = ageLimit {
+                        AgeLimitView(ageLimit: ageLimit)
+                    }
                 }
             }
         }

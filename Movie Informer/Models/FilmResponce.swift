@@ -7,7 +7,7 @@
 
 import Foundation
 
-// Model for top films collections
+// Top films collections
 struct FilmResponce: Codable {
     var pagesCount: Int
     var films: [FilmBaseData]
@@ -34,7 +34,7 @@ struct Genre: Codable {
     var genre: String
 }
 
-// Model for genre films collections
+// Genre films collections
 struct GenreFilmsCollection: Codable {
     var totalPages: Int
     var items: [GenreFilmData]
@@ -59,7 +59,7 @@ struct GenreGenre: Codable {
     var genre: String
 }
 
-// Model for trailers
+// Trailers
 struct FilmTrailers: Codable {
     var items: [FilmTrailer]
 }
@@ -68,4 +68,47 @@ struct FilmTrailer: Codable {
     var url: String
     var name: String
     var site: String
+}
+
+// Film Info by ID
+struct FilmInfoById: Codable {
+    var kinopoiskId: Int
+    var slogan: String?
+    var description: String?
+    var ratingAgeLimits: String?
+}
+
+// Film Box Office
+struct FilmBoxOffice: Codable {
+    var items: [BoxOfficeItem]
+}
+
+struct BoxOfficeItem: Codable {
+    var type: String
+    var amount: Int
+    var currencyCode: String
+}
+
+// Film Team
+struct FilmTeamate: Codable {
+    var staffId: Int
+    var nameRu: String
+    var nameEn: String
+    var description: String?
+    var posterUrl: String
+    var professionKey: String
+}
+
+// Similar films
+struct SimilarFilms: Codable {
+    var total: Int
+    var items: [SimilarFilm]
+}
+
+struct SimilarFilm: Codable {
+    var filmId: Int
+    var nameRu: String
+    var nameEn: String
+    var nameOriginal: String
+    var posterUrl: String
 }
