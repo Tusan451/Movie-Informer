@@ -13,7 +13,7 @@ struct FilmInfoHeaderView: View {
     let filmTitleRu: String
     let filmTitleEn: String?
     let year: String
-    let length: String
+    let length: String?
     let countries: [FilmCountry]
     let genres: [Genre]
     let ageLimit: String?
@@ -61,11 +61,13 @@ struct FilmInfoHeaderView: View {
                             .frame(width: UIScreen.main.bounds.width - 40, alignment: .center)
                             .multilineTextAlignment(.center)
                         
-                        Text(convertLength())
-                            .font(.custom("Inter-Regular", size: 14))
-                            .foregroundColor(Color("Text Main"))
-                            .frame(width: UIScreen.main.bounds.width - 40, alignment: .center)
-                            .multilineTextAlignment(.center)
+                        if length != nil {
+                            Text(convertLength())
+                                .font(.custom("Inter-Regular", size: 14))
+                                .foregroundColor(Color("Text Main"))
+                                .frame(width: UIScreen.main.bounds.width - 40, alignment: .center)
+                                .multilineTextAlignment(.center)
+                        }
                     }
                     
                     Text(setCountryAndGenres())
@@ -132,6 +134,12 @@ extension FilmInfoHeaderView {
     }
     
     private func convertLength() -> String {
+        guard let length = length else { return "" }
+        
+        if length.count <= 3 {
+            return length + " мин."
+        }
+        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm"
         

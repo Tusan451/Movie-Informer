@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E02CF8E0292BB39F00BB7587 /* ColorShemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E02CF8DF292BB39F00BB7587 /* ColorShemeManager.swift */; };
 		E03B4305292530AD008A1323 /* SimilarFilmsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E03B4304292530AD008A1323 /* SimilarFilmsView.swift */; };
 		E03C6D7A2913F93D00B9D775 /* Movie_InformerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E03C6D792913F93D00B9D775 /* Movie_InformerApp.swift */; };
 		E03C6D7C2913F93D00B9D775 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E03C6D7B2913F93D00B9D775 /* ContentView.swift */; };
@@ -40,9 +41,12 @@
 		E0E6057D29254974009DEBC6 /* TrailerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0E6057C29254974009DEBC6 /* TrailerView.swift */; };
 		E0F2829829251572008B6822 /* ActorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F2829729251572008B6822 /* ActorsView.swift */; };
 		E0F3D8742924FD1E0071F7CF /* AboutFilmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F3D8732924FD1E0071F7CF /* AboutFilmView.swift */; };
+		E0F71EEF2927BC7700E3AEB7 /* FilmInfoSecondView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F71EEE2927BC7700E3AEB7 /* FilmInfoSecondView.swift */; };
+		E0F71EF12927CB5D00E3AEB7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F71EF02927CB5D00E3AEB7 /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E02CF8DF292BB39F00BB7587 /* ColorShemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorShemeManager.swift; sourceTree = "<group>"; };
 		E03B4304292530AD008A1323 /* SimilarFilmsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarFilmsView.swift; sourceTree = "<group>"; };
 		E03C6D762913F93D00B9D775 /* Movie Informer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Movie Informer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E03C6D792913F93D00B9D775 /* Movie_InformerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie_InformerApp.swift; sourceTree = "<group>"; };
@@ -76,6 +80,8 @@
 		E0E6057C29254974009DEBC6 /* TrailerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerView.swift; sourceTree = "<group>"; };
 		E0F2829729251572008B6822 /* ActorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorsView.swift; sourceTree = "<group>"; };
 		E0F3D8732924FD1E0071F7CF /* AboutFilmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutFilmView.swift; sourceTree = "<group>"; };
+		E0F71EEE2927BC7700E3AEB7 /* FilmInfoSecondView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmInfoSecondView.swift; sourceTree = "<group>"; };
+		E0F71EF02927CB5D00E3AEB7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,10 +124,12 @@
 				E03C6D7B2913F93D00B9D775 /* ContentView.swift */,
 				E0A02AAD2919228B00CD89EB /* HomeView.swift */,
 				E0D3E6BD291BB49400FC16DF /* FilmInfoView.swift */,
+				E0F71EEE2927BC7700E3AEB7 /* FilmInfoSecondView.swift */,
 				E082AF81291A8E7000F78A68 /* FilmsCollectionView.swift */,
 				E03C6D7D2913F93E00B9D775 /* Assets.xcassets */,
 				E0AD3FD02914339800EE2D8C /* Fonts */,
 				E03C6D7F2913F93E00B9D775 /* Preview Content */,
+				E0F71EF02927CB5D00E3AEB7 /* SettingsView.swift */,
 			);
 			path = "Movie Informer";
 			sourceTree = "<group>";
@@ -163,6 +171,7 @@
 				E0A02AAB29191C8F00CD89EB /* Extension View + CornerRadius.swift */,
 				E0A02AAF291928BF00CD89EB /* ViewRouter.swift */,
 				E0E6057C29254974009DEBC6 /* TrailerView.swift */,
+				E02CF8DF292BB39F00BB7587 /* ColorShemeManager.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -281,6 +290,7 @@
 				E0A02AAA29191A7300CD89EB /* CustomTabBar.swift in Sources */,
 				E0766B1D2923D3EA002FB3BD /* FilmSecondPreviewRowView.swift in Sources */,
 				E0A02AB0291928BF00CD89EB /* ViewRouter.swift in Sources */,
+				E02CF8E0292BB39F00BB7587 /* ColorShemeManager.swift in Sources */,
 				E03C6D7C2913F93D00B9D775 /* ContentView.swift in Sources */,
 				E0A02AA8291912E300CD89EB /* CustomTabBarItem.swift in Sources */,
 				E03B4305292530AD008A1323 /* SimilarFilmsView.swift in Sources */,
@@ -295,6 +305,8 @@
 				E03C6D7A2913F93D00B9D775 /* Movie_InformerApp.swift in Sources */,
 				E082AF82291A8E7000F78A68 /* FilmsCollectionView.swift in Sources */,
 				E0F3D8742924FD1E0071F7CF /* AboutFilmView.swift in Sources */,
+				E0F71EEF2927BC7700E3AEB7 /* FilmInfoSecondView.swift in Sources */,
+				E0F71EF12927CB5D00E3AEB7 /* SettingsView.swift in Sources */,
 				E08CC4B9291957B3000EFACF /* CircularProgressView.swift in Sources */,
 				E0D3E6BE291BB49400FC16DF /* FilmInfoView.swift in Sources */,
 				E082AF86291A970F00F78A68 /* LinearProgressBarView.swift in Sources */,

@@ -10,10 +10,15 @@ import SwiftUI
 @main
 struct Movie_InformerApp: App {
     @StateObject var viewRouter = ViewRouter()
+    @StateObject var csManager = ColorSchemeManager()
     
     var body: some Scene {
         WindowGroup {
             ContentView(viewRouter: viewRouter)
+                .environmentObject(csManager)
+                .onAppear {
+                    csManager.applyColorScheme()
+                }
         }
     }
 }

@@ -20,7 +20,7 @@ struct ContentView: View {
             case .viewed:
                 Text("Viewed View")
             case .settings:
-                Text("Settings View")
+                SettingsView()
             }
             VStack {
                 Spacer()

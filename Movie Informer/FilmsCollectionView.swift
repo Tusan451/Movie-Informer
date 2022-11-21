@@ -49,7 +49,7 @@ struct FilmsCollectionView: View {
                             }
                         } else {
                             ForEach(Array(filmsGenre.enumerated()), id: \.offset) { (index, filmGenre) in
-                                NavigationLink(destination: FilmInfoView()) {
+                                NavigationLink(destination: FilmInfoSecondView(film: filmGenre)) {
                                     FilmSecondPreviewRowView(
                                         image: filmGenre.posterUrl,
                                         position: index + 1,

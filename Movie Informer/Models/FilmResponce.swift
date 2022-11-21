@@ -73,6 +73,7 @@ struct FilmTrailer: Codable {
 // Film Info by ID
 struct FilmInfoById: Codable {
     var kinopoiskId: Int
+    var filmLength: Int?
     var slogan: String?
     var description: String?
     var ratingAgeLimits: String?
