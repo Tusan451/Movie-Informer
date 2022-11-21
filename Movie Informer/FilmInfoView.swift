@@ -2,43 +2,44 @@
 //  FilmInfoView.swift
 //  Movie Informer
 //
-//  Created by Olegio on 09.11.2022.
+//  Created by Olegio on 18.11.2022.
 //
 
 import SwiftUI
-import AVKit
 
 struct FilmInfoView: View {
-    var film: FilmBaseData? = nil
+    var filmByGenreCollection: GenreFilmData? = nil
+    var filmByTopCollection: FilmBaseData? = nil
+    var filmBySimilarCollection: SimilarFilm? = nil
     
     @State private var showingTrailer = false
     @State private var addedInBookmarks = false
     @State private var addedInViewed = false
     
-    @State private var filmTrailers = [FilmTrailer]()
     @State private var filmInfoById: FilmInfoById? = nil
+    @State private var filmTrailers = [FilmTrailer]()
     @State private var filmBoxOffice = [BoxOfficeItem]()
     @State private var filmTeam = [FilmTeamate]()
     @State private var actors = [FilmTeamate]()
     @State private var similarFilms = [SimilarFilm]()
     
     var body: some View {
-        if let film = film {
-            ZStack {
-                Color("Back Main")
-                    .ignoresSafeArea()
-                ScrollView {
+        ZStack {
+            Color("Back Main")
+                .ignoresSafeArea()
+            ScrollView {
+                if let filmInfoById = filmInfoById {
                     VStack(spacing: 24) {
                         VStack(spacing: 16) {
                             FilmInfoHeaderView(
-                                image: film.posterUrl,
-                                rating: film.rating,
-                                filmTitleRu: film.nameRu,
-                                filmTitleEn: film.nameEn,
-                                year: film.year,
-                                length: film.filmLength,
-                                countries: film.countries,
-                                genres: film.genres,
+                                image: filmInfoById.posterUrl,
+                                rating: setRating(),
+                                filmTitleRu: filmInfoById.nameRu ?? filmInfoById.nameOriginal ?? "",
+                                filmTitleEn: filmInfoById.nameOriginal ?? nil,
+                                year: String(filmInfoById.year),
+                                length: setLenght(),
+                                countries: filmInfoById.countries,
+                                genres: filmInfoById.genres,
                                 ageLimit: setAgeLimit()
                             )
                             
@@ -51,8 +52,7 @@ struct FilmInfoView: View {
                                 text: "Трейлер",
                                 iconName: "Play") {
                                     showingTrailer.toggle()
-                                    loadTrailers()
-                            }
+                                }
                                 .popover(isPresented: $showingTrailer) {
                                     ZStack {
                                         Color(.black)
@@ -68,14 +68,14 @@ struct FilmInfoView: View {
                                                 
                                                 Text("Trailer not found")
                                                     .font(.custom("Inter-Bold", size: 26))
-                                                .foregroundColor(.white)
+                                                    .foregroundColor(.white)
                                             }
                                         }
                                     }
                                 }
                             
                             if haveSlogan() {
-                                Text("\"" + (filmInfoById?.slogan)! + "\"")
+                                Text("\"" + (filmInfoById.slogan)! + "\"")
                                     .font(.custom("Inter-Regular", size: 14))
                                     .foregroundColor(Color("Text Secondary"))
                                     .frame(width: UIScreen.main.bounds.width - 40, alignment: .center)
@@ -113,10 +113,10 @@ struct FilmInfoView: View {
                         
                         AboutFilmView(
                             title: "О фильме",
-                            description: haveDescription() ? filmInfoById?.description : nil,
-                            year: film.year,
-                            countries: film.countries,
-                            genres: film.genres,
+                            description: haveDescription() ? filmInfoById.description : nil,
+                            year: String(filmInfoById.year),
+                            countries: filmInfoById.countries,
+                            genres: filmInfoById.genres,
                             director: setDirector(),
                             scenario: setScenario(),
                             producer: setProducer(),
@@ -155,11 +155,13 @@ struct FilmInfoView: View {
                             
                             LazyVStack(spacing: 20) {
                                 ForEach(similarFilms, id: \.filmId) { film in
-                                    SimilarFilmsView(
-                                        imageUrl: film.posterUrl,
-                                        titleRu: film.nameRu,
-                                        titleEn: film.nameEn
-                                    )
+                                    NavigationLink(destination: FilmInfoView(filmBySimilarCollection: film)) {
+                                        SimilarFilmsView(
+                                            imageUrl: film.posterUrl,
+                                            titleRu: film.nameRu,
+                                            titleEn: film.nameEn
+                                        )
+                                    }
                                 }
                             }
                             Rectangle()
@@ -167,83 +169,39 @@ struct FilmInfoView: View {
                                 .frame(width: UIScreen.main.bounds.width, height: 60)
                         }
                     }
-                    .navigationTitle("О фильме")
+                    .navigationTitle(setNavigationTitle())
                     .navigationBarTitleDisplayMode(.inline)
                 }
             }
-            .task {
-                loadFilmInfoById()
-                loadFilmBoxOffice()
-                loadFilmTeam()
-                loadSimilarFilms()
-            }
+        }
+        .task {
+            checkCurrentFilm()
         }
     }
 }
 
-struct FilmInfoView_Previews: PreviewProvider {
+struct FilmInfoSecondView_Previews: PreviewProvider {
     static var previews: some View {
-        FilmInfoView(film: FilmBaseData(
-            filmId: 435,
+        FilmInfoView(filmByGenreCollection: GenreFilmData(
+            kinopoiskId: 435,
             nameRu: "Зеленая миля",
-            nameEn: "The Green Mile",
-            year: "1999",
-            filmLength: "03:09",
+            nameOriginal: "The Green Mile",
             countries: [FilmCountry(country: "США")],
             genres: [Genre(genre: "драма"), Genre(genre: "криминал")],
-            rating: "9.1",
-            ratingVoteCount: 813305,
+            ratingKinopoisk: 9.1,
+            year: 1999,
             posterUrl: "https://kinopoiskapiunofficial.tech/images/posters/kp/435.jpg"
         )
         )
     }
 }
 
+
 extension FilmInfoView {
     
-    private func loadTrailers() {
-        guard let film = film else { return }
+    private func loadFilmInfoById(_ filmID: Int) {
         
-        guard let url = URL(string: ServerUrlStrings.baseUrl.rawValue + "\(film.filmId)/videos") else {
-            print("Invalid URL")
-            return
-        }
-
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        request.addValue("6436b8a3-54c4-487f-963c-ad9773c07c76", forHTTPHeaderField: "X-API-KEY")
-        request.addValue("application/json", forHTTPHeaderField: "accept")
-        
-        URLSession.shared.dataTask(with: request) { data, responce, error in
-            if let data = data {
-                do {
-                    let decodedResponce = try JSONDecoder().decode(FilmTrailers.self, from: data)
-                    DispatchQueue.main.async {
-                        self.filmTrailers = decodedResponce.items
-                    }
-                } catch let DecodingError.dataCorrupted(context) {
-                    print(context)
-                } catch let DecodingError.keyNotFound(key, context) {
-                    print("Key '\(key)' not found:", context.debugDescription)
-                    print("codingPath:", context.codingPath)
-                } catch let DecodingError.valueNotFound(value, context) {
-                    print("Value '\(value)' not found:", context.debugDescription)
-                    print("codingPath:", context.codingPath)
-                } catch let DecodingError.typeMismatch(type, context) {
-                    print("Type '\(type)' mismatch:", context.debugDescription)
-                    print("codingPath:", context.codingPath)
-                } catch {
-                    print("error: ", error)
-                }
-                return
-            }
-        }.resume()
-    }
-    
-    private func loadFilmInfoById() {
-        guard let film = film else { return }
-        
-        guard let url = URL(string: ServerUrlStrings.baseUrl.rawValue + "\(film.filmId)") else {
+        guard let url = URL(string: ServerUrlStrings.baseUrl.rawValue + "\(filmID)") else {
             print("Invalid URL")
             return
         }
@@ -279,10 +237,46 @@ extension FilmInfoView {
         }.resume()
     }
     
-    private func loadFilmBoxOffice() {
-        guard let film = film else { return }
+    private func loadTrailers(_ filmId: Int) {
         
-        guard let url = URL(string: ServerUrlStrings.baseUrl.rawValue + "\(film.filmId)/box_office") else {
+        guard let url = URL(string: ServerUrlStrings.baseUrl.rawValue + "\(filmId)/videos") else {
+            print("Invalid URL")
+            return
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.addValue("6436b8a3-54c4-487f-963c-ad9773c07c76", forHTTPHeaderField: "X-API-KEY")
+        request.addValue("application/json", forHTTPHeaderField: "accept")
+        
+        URLSession.shared.dataTask(with: request) { data, responce, error in
+            if let data = data {
+                do {
+                    let decodedResponce = try JSONDecoder().decode(FilmTrailers.self, from: data)
+                    DispatchQueue.main.async {
+                        self.filmTrailers = decodedResponce.items
+                    }
+                } catch let DecodingError.dataCorrupted(context) {
+                    print(context)
+                } catch let DecodingError.keyNotFound(key, context) {
+                    print("Key '\(key)' not found:", context.debugDescription)
+                    print("codingPath:", context.codingPath)
+                } catch let DecodingError.valueNotFound(value, context) {
+                    print("Value '\(value)' not found:", context.debugDescription)
+                    print("codingPath:", context.codingPath)
+                } catch let DecodingError.typeMismatch(type, context) {
+                    print("Type '\(type)' mismatch:", context.debugDescription)
+                    print("codingPath:", context.codingPath)
+                } catch {
+                    print("error: ", error)
+                }
+                return
+            }
+        }.resume()
+    }
+    
+    private func loadFilmBoxOffice(_ filmId: Int) {
+        guard let url = URL(string: ServerUrlStrings.baseUrl.rawValue + "\(filmId)/box_office") else {
             print("Invalid URL")
             return
         }
@@ -318,10 +312,8 @@ extension FilmInfoView {
         }.resume()
     }
     
-    private func loadFilmTeam() {
-        guard let film = film else { return }
-        
-        guard let url = URL(string: "https://kinopoiskapiunofficial.tech/api/v1/staff?filmId=\(film.filmId)") else {
+    private func loadFilmTeam(_ filmId: Int) {
+        guard let url = URL(string: "https://kinopoiskapiunofficial.tech/api/v1/staff?filmId=\(filmId)") else {
             print("Invalid URL")
             return
         }
@@ -358,10 +350,8 @@ extension FilmInfoView {
         }.resume()
     }
     
-    private func loadSimilarFilms() {
-        guard let film = film else { return }
-        
-        guard let url = URL(string: ServerUrlStrings.baseUrl.rawValue + "\(film.filmId)/similars") else {
+    private func loadSimilarFilms(_ filmId: Int) {
+        guard let url = URL(string: ServerUrlStrings.baseUrl.rawValue + "\(filmId)/similars") else {
             print("Invalid URL")
             return
         }
@@ -421,6 +411,19 @@ extension FilmInfoView {
         return checkTrailers
     }
     
+    private func setRating() -> String? {
+        guard let filmInfoById = filmInfoById else { return nil }
+        
+        return String(filmInfoById.ratingKinopoisk)
+    }
+    
+    private func setLenght() -> String? {
+        guard let filmInfoById = filmInfoById else { return nil }
+        guard let lenght = filmInfoById.filmLength else { return nil }
+        
+        return String(lenght)
+    }
+    
     private func setAgeLimit() -> String? {
         guard let filmInfoById = filmInfoById else { return nil }
         guard var ageLimit = filmInfoById.ratingAgeLimits else { return nil }
@@ -444,28 +447,6 @@ extension FilmInfoView {
         guard let _ = filmInfoById.description else { return false }
         
         return true
-    }
-    
-    private func setBudget() -> Int {
-        var budget = 0
-        
-        for item in filmBoxOffice {
-            if item.type == "BUDGET" {
-                budget = item.amount
-            }
-        }
-        return budget
-    }
-    
-    private func setAmount() -> Int {
-        var amount = 0
-        
-        for item in filmBoxOffice {
-            if item.type == "RUS" || item.type == "WORLD" {
-                amount = item.amount
-            }
-        }
-        return amount
     }
     
     private func setDirector() -> String {
@@ -538,5 +519,59 @@ extension FilmInfoView {
         }
         
         return videomakers
+    }
+    
+    private func setBudget() -> Int {
+        var budget = 0
+        
+        for item in filmBoxOffice {
+            if item.type == "BUDGET" {
+                budget = item.amount
+            }
+        }
+        return budget
+    }
+    
+    private func setAmount() -> Int {
+        var amount = 0
+        
+        for item in filmBoxOffice {
+            if item.type == "RUS" || item.type == "WORLD" {
+                amount = item.amount
+            }
+        }
+        return amount
+    }
+    
+    private func setNavigationTitle() -> String {
+        if let _ = filmByGenreCollection {
+            return "О фильме"
+        } else if let _ = filmByTopCollection {
+            return "О фильме"
+        } else {
+            return "Похожий фильм"
+        }
+    }
+    
+    private func checkCurrentFilm() {
+        if let filmByGenreCollection = filmByGenreCollection {
+            loadFilmInfoById(filmByGenreCollection.kinopoiskId)
+            loadTrailers(filmByGenreCollection.kinopoiskId)
+            loadFilmBoxOffice(filmByGenreCollection.kinopoiskId)
+            loadFilmTeam(filmByGenreCollection.kinopoiskId)
+            loadSimilarFilms(filmByGenreCollection.kinopoiskId)
+        } else if let filmByTopCollection = filmByTopCollection {
+            loadFilmInfoById(filmByTopCollection.filmId)
+            loadTrailers(filmByTopCollection.filmId)
+            loadFilmBoxOffice(filmByTopCollection.filmId)
+            loadFilmTeam(filmByTopCollection.filmId)
+            loadSimilarFilms(filmByTopCollection.filmId)
+        } else if let filmBySimilarCollection = filmBySimilarCollection {
+            loadFilmInfoById(filmBySimilarCollection.filmId)
+            loadTrailers(filmBySimilarCollection.filmId)
+            loadFilmBoxOffice(filmBySimilarCollection.filmId)
+            loadFilmTeam(filmBySimilarCollection.filmId)
+        }
+    
     }
 }

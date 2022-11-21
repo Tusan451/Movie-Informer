@@ -73,10 +73,17 @@ struct FilmTrailer: Codable {
 // Film Info by ID
 struct FilmInfoById: Codable {
     var kinopoiskId: Int
+    var nameRu: String?
+    var nameOriginal: String?
+    var posterUrl: String
+    var ratingKinopoisk: Double
+    var year: Int
     var filmLength: Int?
     var slogan: String?
     var description: String?
     var ratingAgeLimits: String?
+    var countries: [FilmCountry]
+    var genres: [Genre]
 }
 
 // Film Box Office
