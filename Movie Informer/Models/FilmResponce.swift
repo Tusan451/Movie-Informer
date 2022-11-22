@@ -76,7 +76,8 @@ struct FilmInfoById: Codable {
     var nameRu: String?
     var nameOriginal: String?
     var posterUrl: String
-    var ratingKinopoisk: Double
+    var ratingKinopoisk: Double?
+    var ratingAwait: Double?
     var year: Int
     var filmLength: Int?
     var slogan: String?

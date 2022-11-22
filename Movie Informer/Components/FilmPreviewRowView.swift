@@ -33,16 +33,25 @@ struct FilmPreviewRowView: View {
                     .frame(width: 30, height: 105, alignment: .topLeading)
                 
                 HStack(spacing: 12) {
-                    AsyncImage(url: imageUrl) { image in
-                        image.resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 70, height: 105)
-                            .cornerRadius(4, corners: .allCorners)
-                    } placeholder: {
-                        ZStack {
-                            Color("Tertiary Accent")
-                            ProgressView()
-                                .tint(Color("Primary Accent"))
+                    CacheAsyncImage(url: imageUrl) { phase in
+                        switch phase {
+                        case .success(let image):
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 70, height: 105)
+                                .cornerRadius(4, corners: .allCorners)
+                        case .failure(let error):
+                            // Добавить ErrorView
+                            Text("Error: \(error.localizedDescription)")
+                        case .empty:
+                            ZStack {
+                                Color("Tertiary Accent")
+                                ProgressView()
+                                    .tint(Color("Primary Accent"))
+                            }
+                        @unknown default:
+                            fatalError()
                         }
                     }
                     .frame(width: 70, height: 105)

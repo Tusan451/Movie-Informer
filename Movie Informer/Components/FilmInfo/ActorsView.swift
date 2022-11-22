@@ -14,20 +14,34 @@ struct ActorsView: View {
     
     var body: some View {
         HStack(spacing: 20) {
-            AsyncImage(url: URL(string: imageUrl)) { image in
-                image.resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 70, height: 105)
-                    .cornerRadius(4, corners: .allCorners)
-            } placeholder: {
-                ZStack {
-                    Color("Tertiary Accent")
-                    ProgressView()
-                        .tint(Color("Primary Accent"))
+            if let url = URL(string: imageUrl) {
+                CacheAsyncImage(url: url) { phase in
+                    switch phase {
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 70, height: 105)
+                            .cornerRadius(4, corners: .allCorners)
+                    case .failure(let error):
+                        // Добавить ErrorView
+                        Text("Error: \(error.localizedDescription)")
+                    case .empty:
+                        ZStack {
+                            Color("Tertiary Accent")
+                            ProgressView()
+                                .tint(Color("Primary Accent"))
+                        }
+                    @unknown default:
+                        fatalError()
+                    }
                 }
+                .frame(width: 70, height: 105)
+                .cornerRadius(4, corners: .allCorners)
+            } else {
+                // Добавить ErrorView
+                Text("Error")
             }
-            .frame(width: 70, height: 105)
-            .cornerRadius(4, corners: .allCorners)
             
             VStack(spacing: 5) {
                 Text(name)

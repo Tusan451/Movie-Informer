@@ -17,6 +17,7 @@
 		E03C6D8B2913FCE000B9D775 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E03C6D8A2913FCE000B9D775 /* RealmSwift */; };
 		E056D7C0291BF62200CE2C5A /* FilmResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = E056D7BF291BF62200CE2C5A /* FilmResponce.swift */; };
 		E05EE66F291AC063006856AE /* FilmPreviewRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E05EE66E291AC063006856AE /* FilmPreviewRowView.swift */; };
+		E0693C2D292CEECB0008D990 /* CacheAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0693C2C292CEECB0008D990 /* CacheAsyncImage.swift */; };
 		E0766B1D2923D3EA002FB3BD /* FilmSecondPreviewRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0766B1C2923D3EA002FB3BD /* FilmSecondPreviewRowView.swift */; };
 		E0766B202923DCC3002FB3BD /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0766B1F2923DCC3002FB3BD /* RatingView.swift */; };
 		E0766B222923E025002FB3BD /* AgeLimitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0766B212923E025002FB3BD /* AgeLimitView.swift */; };
@@ -54,6 +55,7 @@
 		E03C6D802913F93E00B9D775 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E056D7BF291BF62200CE2C5A /* FilmResponce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmResponce.swift; sourceTree = "<group>"; };
 		E05EE66E291AC063006856AE /* FilmPreviewRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmPreviewRowView.swift; sourceTree = "<group>"; };
+		E0693C2C292CEECB0008D990 /* CacheAsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheAsyncImage.swift; sourceTree = "<group>"; };
 		E0766B1C2923D3EA002FB3BD /* FilmSecondPreviewRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmSecondPreviewRowView.swift; sourceTree = "<group>"; };
 		E0766B1F2923DCC3002FB3BD /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		E0766B212923E025002FB3BD /* AgeLimitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeLimitView.swift; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 				E0A02AAF291928BF00CD89EB /* ViewRouter.swift */,
 				E0E6057C29254974009DEBC6 /* TrailerView.swift */,
 				E02CF8DF292BB39F00BB7587 /* ColorShemeManager.swift */,
+				E0693C2C292CEECB0008D990 /* CacheAsyncImage.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -286,6 +289,7 @@
 				E056D7C0291BF62200CE2C5A /* FilmResponce.swift in Sources */,
 				E0A02AAA29191A7300CD89EB /* CustomTabBar.swift in Sources */,
 				E0766B1D2923D3EA002FB3BD /* FilmSecondPreviewRowView.swift in Sources */,
+				E0693C2D292CEECB0008D990 /* CacheAsyncImage.swift in Sources */,
 				E0A02AB0291928BF00CD89EB /* ViewRouter.swift in Sources */,
 				E02CF8E0292BB39F00BB7587 /* ColorShemeManager.swift in Sources */,
 				E03C6D7C2913F93D00B9D775 /* ContentView.swift in Sources */,

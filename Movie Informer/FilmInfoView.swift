@@ -413,8 +413,13 @@ extension FilmInfoView {
     
     private func setRating() -> String? {
         guard let filmInfoById = filmInfoById else { return nil }
-        
-        return String(filmInfoById.ratingKinopoisk)
+        if let ratingKinopoisk = filmInfoById.ratingKinopoisk {
+            return String(ratingKinopoisk)
+        } else if let ratingAwait = filmInfoById.ratingAwait {
+            return String(ratingAwait) + "%"
+        } else {
+            return nil
+        }
     }
     
     private func setLenght() -> String? {

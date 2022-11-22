@@ -21,18 +21,32 @@ struct FilmInfoHeaderView: View {
     var body: some View {
         VStack(spacing: 12) {
             ZStack {
-                AsyncImage(url: URL(string: image)) { image in
-                    image.resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 2)
-                } placeholder: {
-                    ZStack {
-                        Color("Tertiary Accent")
-                        ProgressView()
-                            .tint(Color("Primary Accent"))
+                if let url = URL(string: image) {
+                    CacheAsyncImage(url: url) { phase in
+                        switch phase {
+                        case .success(let image):
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 2)
+                        case .failure(let error):
+                            // Добавить ErrorView
+                            Text("Error: \(error.localizedDescription)")
+                        case .empty:
+                            ZStack {
+                                Color("Tertiary Accent")
+                                ProgressView()
+                                    .tint(Color("Primary Accent"))
+                            }
+                        @unknown default:
+                            fatalError()
+                        }
                     }
+                    .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 2)
+                } else {
+                    // Добавить ErrorView
+                    Text("Error")
                 }
-                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 2)
                 
                 if let rating = rating {
                     RatingView(rating: rating)

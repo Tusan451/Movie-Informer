@@ -12,7 +12,7 @@ struct RatingView: View {
     
     var body: some View {
         ZStack {
-            if rating?.last != "%" {
+            if let rating = rating, rating.count <= 3 {
                 Rectangle()
                     .frame(width: 51, height: 40)
                     .cornerRadius(6, corners: .allCorners)
