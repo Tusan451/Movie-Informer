@@ -11,9 +11,9 @@ struct FilmPreviewRowView: View {
     
     let image: String
     let position: Int
-    let title: String
+    let title: String?
     let titleEn: String?
-    let length: String
+    let length: String?
     let countries: [FilmCountry]
     let genres: [Genre]
     let year: String
@@ -58,11 +58,14 @@ struct FilmPreviewRowView: View {
                     .cornerRadius(4, corners: .allCorners)
                     
                     VStack(spacing: 5) {
-                        Text(title)
-                            .font(.custom("Inter-SemiBold", size: 15))
-                            .foregroundColor(Color("Text Main"))
-                            .frame(width: 160, alignment: .topLeading)
-                            .multilineTextAlignment(.leading)
+                        
+                        if let title = title {
+                            Text(title)
+                                .font(.custom("Inter-SemiBold", size: 15))
+                                .foregroundColor(Color("Text Main"))
+                                .frame(width: 160, alignment: .topLeading)
+                                .multilineTextAlignment(.leading)
+                        }
                         
                         VStack(spacing: 2) {
                             Text("\(enTitleAndYear())")
@@ -71,11 +74,13 @@ struct FilmPreviewRowView: View {
                                 .frame(width: 160, alignment: .leading)
                                 .multilineTextAlignment(.leading)
                             
-                            Text(convertLength())
-                                .font(.custom("Inter-Regular", size: 12))
-                                .foregroundColor(Color("Text Main"))
-                                .frame(width: 160, alignment: .leading)
-                                .multilineTextAlignment(.leading)
+                            if let _ = length {
+                                Text(convertLength())
+                                    .font(.custom("Inter-Regular", size: 12))
+                                    .foregroundColor(Color("Text Main"))
+                                    .frame(width: 160, alignment: .leading)
+                                    .multilineTextAlignment(.leading)
+                            }
                         }
                         
                         Text(setCountryAndGenres())
@@ -195,6 +200,8 @@ extension FilmPreviewRowView {
     }
     
     private func convertLength() -> String {
+        guard let length = length else { return "" }
+        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm"
         

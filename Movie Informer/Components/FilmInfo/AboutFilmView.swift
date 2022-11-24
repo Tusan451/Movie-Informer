@@ -44,6 +44,7 @@ struct AboutFilmView: View {
                     
                     Text(year)
                         .font(.custom("Inter-Regular", size: 14))
+                        .lineSpacing(4)
                         .foregroundColor(Color("Text Main"))
                         .frame(width: UIScreen.main.bounds.width / 2.3, alignment: .leading)
                 }
@@ -56,6 +57,7 @@ struct AboutFilmView: View {
                     
                     Text(setCountries())
                         .font(.custom("Inter-Regular", size: 14))
+                        .lineSpacing(4)
                         .foregroundColor(Color("Text Main"))
                         .frame(width: UIScreen.main.bounds.width / 2.3, alignment: .leading)
                 }
@@ -68,6 +70,7 @@ struct AboutFilmView: View {
                     
                     Text(setGenres())
                         .font(.custom("Inter-Regular", size: 14))
+                        .lineSpacing(4)
                         .foregroundColor(Color("Text Main"))
                         .frame(width: UIScreen.main.bounds.width / 2.3, alignment: .leading)
                 }
@@ -81,6 +84,7 @@ struct AboutFilmView: View {
                         
                         Text(director)
                             .font(.custom("Inter-Regular", size: 14))
+                            .lineSpacing(4)
                             .foregroundColor(Color("Text Main"))
                             .frame(width: UIScreen.main.bounds.width / 2.3, alignment: .leading)
                     }
@@ -95,6 +99,7 @@ struct AboutFilmView: View {
                         
                         Text(setProdusers())
                             .font(.custom("Inter-Regular", size: 14))
+                            .lineSpacing(4)
                             .foregroundColor(Color("Text Main"))
                             .frame(width: UIScreen.main.bounds.width / 2.3, alignment: .leading)
                     }
@@ -109,6 +114,7 @@ struct AboutFilmView: View {
                         
                         Text(setScenario())
                             .font(.custom("Inter-Regular", size: 14))
+                            .lineSpacing(4)
                             .foregroundColor(Color("Text Main"))
                             .frame(width: UIScreen.main.bounds.width / 2.3, alignment: .leading)
                     }
@@ -123,6 +129,7 @@ struct AboutFilmView: View {
                         
                         Text(setVideomakers())
                             .font(.custom("Inter-Regular", size: 14))
+                            .lineSpacing(4)
                             .foregroundColor(Color("Text Main"))
                             .frame(width: UIScreen.main.bounds.width / 2.3, alignment: .leading)
                     }
@@ -137,6 +144,7 @@ struct AboutFilmView: View {
                         
                         Text("$\(budget)")
                             .font(.custom("Inter-Regular", size: 14))
+                            .lineSpacing(4)
                             .foregroundColor(Color("Text Main"))
                             .frame(width: UIScreen.main.bounds.width / 2.3, alignment: .leading)
                     }
@@ -151,6 +159,7 @@ struct AboutFilmView: View {
                         
                         Text("$\(world)")
                             .font(.custom("Inter-Regular", size: 14))
+                            .lineSpacing(4)
                             .foregroundColor(Color("Text Main"))
                             .frame(width: UIScreen.main.bounds.width / 2.3, alignment: .leading)
                     }
@@ -165,6 +174,7 @@ struct AboutFilmView: View {
                         
                         Text(ageLimit)
                             .font(.custom("Inter-Regular", size: 14))
+                            .lineSpacing(4)
                             .foregroundColor(Color("Text Main"))
                             .frame(width: UIScreen.main.bounds.width / 2.3, alignment: .leading)
                     }

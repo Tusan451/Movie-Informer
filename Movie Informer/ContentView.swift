@@ -16,7 +16,8 @@ struct ContentView: View {
             case .home:
                 HomeView()
             case .bookmarks:
-                Text("Bookmarks View")
+//                Text("Bookmarks View")
+                SearchFilmsActors()
             case .viewed:
                 Text("Viewed View")
             case .settings:

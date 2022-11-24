@@ -15,10 +15,10 @@ struct FilmResponce: Codable {
 
 struct FilmBaseData: Codable {
     var filmId: Int
-    var nameRu: String
+    var nameRu: String?
     var nameEn: String?
     var year: String
-    var filmLength: String
+    var filmLength: String?
     var countries: [FilmCountry]
     var genres: [Genre]
     var rating: String?
@@ -120,4 +120,35 @@ struct SimilarFilm: Codable {
     var nameEn: String
     var nameOriginal: String
     var posterUrl: String
+}
+
+// Person Data
+struct Person: Codable {
+    var personId: Int
+    var nameRu: String
+    var nameEn: String
+    var posterUrl: String
+    var growth: Int
+    var birthday: String?
+    var death: String?
+    var age: Int
+    var birthplace: String?
+    var deathplace: String?
+    var profession: String
+    var facts: [String]
+    var films: [PersonFilm]
+}
+
+// Person Film
+struct PersonFilm: Codable, Hashable {
+    var filmId: Int
+    var nameRu: String?
+    var nameEn: String?
+    var rating: String?
+}
+
+// Search film
+struct SearchFilm: Codable {
+    var keyword: String
+    var films: [FilmBaseData]
 }

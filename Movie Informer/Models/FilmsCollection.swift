@@ -7,8 +7,12 @@
 
 import Foundation
 
+let apiKey = "bd8e1e8b-cfdb-4e53-a67f-d36f9abfe756"
+
 enum ServerUrlStrings: String {
     case baseUrl = "https://kinopoiskapiunofficial.tech/api/v2.2/films/"
+    case actorUrl = "https://kinopoiskapiunofficial.tech/api/v1/staff/"
+    case searchFilms = "https://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-keyword?keyword="
 }
 
 struct FilmsCollection: Identifiable {

@@ -136,11 +136,13 @@ struct FilmInfoView: View {
                         
                         LazyVStack(spacing: 20) {
                             ForEach(actors.prefix(10), id: \.staffId) { item in
-                                ActorsView(
-                                    imageUrl: item.posterUrl,
-                                    name: item.nameRu.isEmpty ? item.nameEn : item.nameRu,
-                                    description: item.description
-                                )
+                                NavigationLink(destination: ActorInfoView(actorInfo: item)) {
+                                    ActorsView(
+                                        imageUrl: item.posterUrl,
+                                        name: item.nameRu.isEmpty ? item.nameEn : item.nameRu,
+                                        description: item.description
+                                    )
+                                }
                             }
                         }
                         
@@ -171,6 +173,9 @@ struct FilmInfoView: View {
                     }
                     .navigationTitle(setNavigationTitle())
                     .navigationBarTitleDisplayMode(.inline)
+                } else {
+                    // Добавить error view
+                    Text("Error data")
                 }
             }
         }
@@ -208,7 +213,7 @@ extension FilmInfoView {
 
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        request.addValue("6436b8a3-54c4-487f-963c-ad9773c07c76", forHTTPHeaderField: "X-API-KEY")
+        request.addValue(apiKey, forHTTPHeaderField: "X-API-KEY")
         request.addValue("application/json", forHTTPHeaderField: "accept")
         
         URLSession.shared.dataTask(with: request) { data, responce, error in
@@ -246,7 +251,7 @@ extension FilmInfoView {
 
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        request.addValue("6436b8a3-54c4-487f-963c-ad9773c07c76", forHTTPHeaderField: "X-API-KEY")
+        request.addValue(apiKey, forHTTPHeaderField: "X-API-KEY")
         request.addValue("application/json", forHTTPHeaderField: "accept")
         
         URLSession.shared.dataTask(with: request) { data, responce, error in
@@ -283,7 +288,7 @@ extension FilmInfoView {
 
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        request.addValue("6436b8a3-54c4-487f-963c-ad9773c07c76", forHTTPHeaderField: "X-API-KEY")
+        request.addValue(apiKey, forHTTPHeaderField: "X-API-KEY")
         request.addValue("application/json", forHTTPHeaderField: "accept")
         
         URLSession.shared.dataTask(with: request) { data, responce, error in
@@ -320,7 +325,7 @@ extension FilmInfoView {
 
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        request.addValue("6436b8a3-54c4-487f-963c-ad9773c07c76", forHTTPHeaderField: "X-API-KEY")
+        request.addValue(apiKey, forHTTPHeaderField: "X-API-KEY")
         request.addValue("application/json", forHTTPHeaderField: "accept")
         
         URLSession.shared.dataTask(with: request) { data, responce, error in
@@ -358,7 +363,7 @@ extension FilmInfoView {
 
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        request.addValue("6436b8a3-54c4-487f-963c-ad9773c07c76", forHTTPHeaderField: "X-API-KEY")
+        request.addValue(apiKey, forHTTPHeaderField: "X-API-KEY")
         request.addValue("application/json", forHTTPHeaderField: "accept")
         
         URLSession.shared.dataTask(with: request) { data, responce, error in

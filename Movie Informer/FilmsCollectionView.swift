@@ -133,7 +133,7 @@ extension FilmsCollectionView {
 
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        request.addValue("6436b8a3-54c4-487f-963c-ad9773c07c76", forHTTPHeaderField: "X-API-KEY")
+        request.addValue(apiKey, forHTTPHeaderField: "X-API-KEY")
         request.addValue("application/json", forHTTPHeaderField: "accept")
         
         URLSession.shared.dataTask(with: request) { data, responce, error in
@@ -172,7 +172,7 @@ extension FilmsCollectionView {
 
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        request.addValue("6436b8a3-54c4-487f-963c-ad9773c07c76", forHTTPHeaderField: "X-API-KEY")
+        request.addValue(apiKey, forHTTPHeaderField: "X-API-KEY")
         request.addValue("application/json", forHTTPHeaderField: "accept")
         
         URLSession.shared.dataTask(with: request) { data, responce, error in
