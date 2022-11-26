@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ActorInfoView: View {
     var actorInfo: FilmTeamate?
+    var actorSearchResult: ActorsSearchResult? = nil
     
     @State private var actorInfoById: Person? = nil
     @State private var films = [PersonFilm]()
@@ -46,14 +47,16 @@ struct ActorInfoView: View {
                             moviesCount: films.count
                         )
                         
-                        Divider()
-                            .overlay(Color("Back Secondary"))
-                            .frame(width: UIScreen.main.bounds.width - 40)
-                        
-                        ActorFactsView(
-                            title: "Интересные факты",
-                            facts: actorInfoById.facts
-                        )
+                        if !actorInfoById.facts.isEmpty {
+                            Divider()
+                                .overlay(Color("Back Secondary"))
+                                .frame(width: UIScreen.main.bounds.width - 40)
+                            
+                            ActorFactsView(
+                                title: "Интересные факты",
+                                facts: actorInfoById.facts
+                            )
+                        }
                         
                         Divider()
                             .overlay(Color("Back Secondary"))
@@ -90,7 +93,6 @@ struct ActorInfoView: View {
         }
         .task {
             checkActor()
-//            getTopFiveFilms()
         }
     }
 }
@@ -174,7 +176,10 @@ extension ActorInfoView {
                 do {
                     let decodedResponce = try JSONDecoder().decode(FilmInfoById.self, from: data)
                     DispatchQueue.main.async {
-                        self.topFilms.append(decodedResponce)
+//                        self.topFilms.append(decodedResponce)
+                        if decodedResponce.type == "FILM" {
+                            self.topFilms.append(decodedResponce)
+                        }
                         print(topFilms.count)
                     }
                 } catch let DecodingError.dataCorrupted(context) {
@@ -196,15 +201,23 @@ extension ActorInfoView {
         }.resume()
     }
     
-    private func getTopFiveFilms() {
-        for film in films.prefix(5) {
-            loadFilmInfoById(film.filmId)
-        }
-    }
+//    private func getTopFiveFilms() {
+//        for film in films.prefix(5) {
+//            loadFilmInfoById(film.filmId)
+//        }
+//    }
     
     private func checkActor() {
-        guard let actorInfo = actorInfo else { return }
-        loadActorInfoById(actorInfo.staffId)
+//        guard let actorInfo = actorInfo else { return }
+//        loadActorInfoById(actorInfo.staffId)
+        
+        if let actorInfo = actorInfo {
+            loadActorInfoById(actorInfo.staffId)
+        } else if let actorSearchResult = actorSearchResult {
+            loadActorInfoById(actorSearchResult.kinopoiskId)
+        } else {
+            return
+        }
     }
     
     private func setRatingFor(_ film: FilmInfoById) -> String? {

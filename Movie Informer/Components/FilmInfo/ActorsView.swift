@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ActorsView: View {
     let imageUrl: String
-    let name: String
+    let name: String?
     let description: String?
     
     var body: some View {
@@ -44,10 +44,12 @@ struct ActorsView: View {
             }
             
             VStack(spacing: 5) {
-                Text(name)
-                    .font(.custom("Inter-Medium", size: 15))
-                    .foregroundColor(Color("Text Main"))
-                    .frame(width: UIScreen.main.bounds.width / 1.5, alignment: .leading)
+                if let name = name {
+                    Text(name)
+                        .font(.custom("Inter-Medium", size: 15))
+                        .foregroundColor(Color("Text Main"))
+                        .frame(width: UIScreen.main.bounds.width / 1.5, alignment: .leading)
+                }
                 
                 if let description = description {
                     Text(description)

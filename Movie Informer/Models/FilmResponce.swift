@@ -82,6 +82,7 @@ struct FilmInfoById: Codable {
     var filmLength: Int?
     var slogan: String?
     var description: String?
+    var type: String
     var ratingAgeLimits: String?
     var countries: [FilmCountry]
     var genres: [Genre]
@@ -151,4 +152,17 @@ struct PersonFilm: Codable, Hashable {
 struct SearchFilm: Codable {
     var keyword: String
     var films: [FilmBaseData]
+}
+
+// Search actor
+struct SearchActor: Codable {
+    var items: [ActorsSearchResult]
+}
+
+// Finding actor
+struct ActorsSearchResult: Codable {
+    var kinopoiskId: Int
+    var nameRu: String?
+    var nameEn: String?
+    var posterUrl: String
 }

@@ -17,11 +17,17 @@ struct CustomTabBar: View {
                 .cornerRadius(40, corners: [.topLeft, .topRight])
                 .foregroundColor(Color("Primary Accent"))
             
-            HStack(spacing: UIScreen.main.bounds.width/8) {
+            HStack(spacing: UIScreen.main.bounds.width/13) {
                 CustomTabBarItem(
                     viewRouter: viewRouter,
                     assignedPage: .home,
                     imageName: "Home",
+                    color: .white
+                )
+                CustomTabBarItem(
+                    viewRouter: viewRouter,
+                    assignedPage: .search,
+                    imageName: "Search",
                     color: .white
                 )
                 CustomTabBarItem(

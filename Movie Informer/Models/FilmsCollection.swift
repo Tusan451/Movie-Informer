@@ -13,6 +13,7 @@ enum ServerUrlStrings: String {
     case baseUrl = "https://kinopoiskapiunofficial.tech/api/v2.2/films/"
     case actorUrl = "https://kinopoiskapiunofficial.tech/api/v1/staff/"
     case searchFilms = "https://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-keyword?keyword="
+    case searchActors = "https://kinopoiskapiunofficial.tech/api/v1/persons?name="
 }
 
 struct FilmsCollection: Identifiable {

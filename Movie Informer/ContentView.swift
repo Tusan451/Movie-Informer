@@ -15,9 +15,10 @@ struct ContentView: View {
             switch viewRouter.currentPage {
             case .home:
                 HomeView()
+            case .search:
+                SearchCategories()
             case .bookmarks:
-//                Text("Bookmarks View")
-                SearchFilmsActors()
+                Text("Bookmarks View")
             case .viewed:
                 Text("Viewed View")
             case .settings:
