@@ -62,26 +62,28 @@ struct ActorInfoView: View {
                             )
                         }
                         
-                        Divider()
-                            .overlay(Color("Back Secondary"))
-                            .frame(width: UIScreen.main.bounds.width - 40)
-                        
-                        Text("Популярные фильмы")
-                            .font(.custom("Inter-Bold", size: 20))
-                            .frame(width: UIScreen.main.bounds.width - 40, alignment: .leading)
-                        
-                        LazyVStack(spacing: 20) {
-                            ForEach(topFilms.prefix(5), id: \.kinopoiskId) { film in
-                                ActorFilmView(
-                                    image: film.posterUrl,
-                                    title: film.nameRu,
-                                    enTitle: film.nameOriginal,
-                                    year: film.year,
-                                    length: film.filmLength,
-                                    countries: film.countries,
-                                    genres: film.genres,
-                                    rating: setRatingFor(film)
-                                )
+                        if !topFilms.isEmpty {
+                            Divider()
+                                .overlay(Color("Back Secondary"))
+                                .frame(width: UIScreen.main.bounds.width - 40)
+                            
+                            Text("Популярные фильмы")
+                                .font(.custom("Inter-Bold", size: 20))
+                                .frame(width: UIScreen.main.bounds.width - 40, alignment: .leading)
+                            
+                            LazyVStack(spacing: 20) {
+                                ForEach(topFilms.prefix(5), id: \.kinopoiskId) { film in
+                                    ActorFilmView(
+                                        image: film.posterUrl,
+                                        title: film.nameRu,
+                                        enTitle: film.nameOriginal,
+                                        year: film.year,
+                                        length: film.filmLength,
+                                        countries: film.countries,
+                                        genres: film.genres,
+                                        rating: setRatingFor(film)
+                                    )
+                                }
                             }
                         }
                         

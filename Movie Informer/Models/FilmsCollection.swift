@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-let apiKey = "bd8e1e8b-cfdb-4e53-a67f-d36f9abfe756"
+let apiKey = "Your Api Key" // Enter APi KEY here
 
 enum ServerUrlStrings: String {
     case baseUrl = "https://kinopoiskapiunofficial.tech/api/v2.2/films/"
