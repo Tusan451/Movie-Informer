@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-let apiKey = "6436b8a3-54c4-487f-963c-ad9773c07c76"
+let apiKey = "bd8e1e8b-cfdb-4e53-a67f-d36f9abfe756"
 
 enum ServerUrlStrings: String {
     case baseUrl = "https://kinopoiskapiunofficial.tech/api/v2.2/films/"
@@ -54,72 +54,121 @@ struct FilmsCollection: Identifiable {
             ),
             FilmsCollection(
                 id: 4,
+                urlString: "https://kinopoiskapiunofficial.tech/api/v2.2/films?genres=4&order=RATING&type=ALL&ratingFrom=5&ratingTo=10&yearFrom=1000&yearTo=3000&page=",
+                image: "Про любовь",
+                title: "Про любовь",
+                filmsCount: 100
+            ),
+            FilmsCollection(
+                id: 5,
                 urlString: "https://kinopoiskapiunofficial.tech/api/v2.2/films?genres=1&order=RATING&type=FILM&ratingFrom=5&ratingTo=10&yearFrom=1000&yearTo=3000&page=",
                 image: "Триллеры",
                 title: "Триллеры",
                 filmsCount: 100
             ),
             FilmsCollection(
-                id: 5,
+                id: 6,
                 urlString: "https://kinopoiskapiunofficial.tech/api/v2.2/films?genres=2&order=RATING&type=FILM&ratingFrom=5&ratingTo=10&yearFrom=1000&yearTo=3000&page=",
                 image: "Драмы",
                 title: "Драмы",
                 filmsCount: 100
             ),
             FilmsCollection(
-                id: 6,
+                id: 7,
                 urlString: "https://kinopoiskapiunofficial.tech/api/v2.2/films?genres=17&order=RATING&type=FILM&ratingFrom=5&ratingTo=10&yearFrom=1000&yearTo=3000&page=",
                 image: "Ужасы",
                 title: "Ужасы",
                 filmsCount: 100
             ),
             FilmsCollection(
-                id: 7,
+                id: 8,
                 urlString: "https://kinopoiskapiunofficial.tech/api/v2.2/films?genres=6&order=RATING&type=FILM&ratingFrom=5&ratingTo=10&yearFrom=1000&yearTo=3000&page=",
                 image: "Фантастика",
                 title: "Фантастика",
                 filmsCount: 100
             ),
             FilmsCollection(
-                id: 8,
+                id: 9,
                 urlString: "https://kinopoiskapiunofficial.tech/api/v2.2/films?genres=7&order=RATING&type=FILM&ratingFrom=5&ratingTo=10&yearFrom=1000&yearTo=3000&page=",
                 image: "Приключения",
                 title: "Приключения",
                 filmsCount: 100
             ),
             FilmsCollection(
-                id: 9,
+                id: 10,
                 urlString: "https://kinopoiskapiunofficial.tech/api/v2.2/films?genres=12&order=RATING&type=FILM&ratingFrom=5&ratingTo=10&yearFrom=1000&yearTo=3000&page=",
                 image: "Фэнтези",
                 title: "Фэнтези",
                 filmsCount: 100
             ),
             FilmsCollection(
-                id: 10,
+                id: 11,
                 urlString: "https://kinopoiskapiunofficial.tech/api/v2.2/films?genres=3&order=RATING&type=FILM&ratingFrom=5&ratingTo=10&yearFrom=1000&yearTo=3000&page=",
                 image: "Криминал",
                 title: "Криминал",
                 filmsCount: 100
             ),
             FilmsCollection(
-                id: 11,
+                id: 12,
                 urlString: "https://kinopoiskapiunofficial.tech/api/v2.2/films?genres=15&order=RATING&type=FILM&ratingFrom=5&ratingTo=10&yearFrom=1000&yearTo=3000&page=",
                 image: "Исторические",
                 title: "Исторические",
                 filmsCount: 100
             ),
             FilmsCollection(
-                id: 12,
+                id: 13,
+                urlString: "https://kinopoiskapiunofficial.tech/api/v2.2/films?genres=22&order=RATING&type=ALL&ratingFrom=5&ratingTo=10&yearFrom=1000&yearTo=3000&page=",
+                image: "Документальные",
+                title: "Документальные",
+                filmsCount: 100
+            ),
+            FilmsCollection(
+                id: 14,
                 urlString: "https://kinopoiskapiunofficial.tech/api/v2.2/films?genres=8&order=RATING&type=FILM&ratingFrom=5&ratingTo=10&yearFrom=1000&yearTo=3000&page=",
                 image: "Биографии",
                 title: "Биографии",
                 filmsCount: 100
             ),
             FilmsCollection(
-                id: 13,
+                id: 15,
                 urlString: "https://kinopoiskapiunofficial.tech/api/v2.2/films?genres=21&order=RATING&type=FILM&ratingFrom=5&ratingTo=10&yearFrom=1000&yearTo=3000&page=",
                 image: "Спортивные",
                 title: "Спортивные",
+                filmsCount: 100
+            ),
+            FilmsCollection(
+                id: 16,
+                urlString: "https://kinopoiskapiunofficial.tech/api/v2.2/films?genres=14&order=RATING&type=ALL&ratingFrom=5&ratingTo=10&yearFrom=1000&yearTo=3000&page=",
+                image: "Военные",
+                title: "Военные",
+                filmsCount: 100
+            ),
+            FilmsCollection(
+                id: 17,
+                urlString: "https://kinopoiskapiunofficial.tech/api/v2.2/films?genres=19&order=RATING&type=ALL&ratingFrom=5&ratingTo=10&yearFrom=1000&yearTo=3000&page=",
+                image: "Семейные",
+                title: "Семейные",
+                filmsCount: 100
+            ),
+            FilmsCollection(
+                id: 18,
+                urlString: "https://kinopoiskapiunofficial.tech/api/v2.2/films?genres=24&order=RATING&type=ALL&ratingFrom=5&ratingTo=10&yearFrom=1000&yearTo=3000&page=",
+                image: "Аниме",
+                title: "Аниме",
+                filmsCount: 100
+            ),
+            FilmsCollection(
+                id: 19,
+                urlString: "https://kinopoiskapiunofficial.tech/api/v2.2/films?genres=10&order=RATING&type=ALL&ratingFrom=5&ratingTo=10&yearFrom=1000&yearTo=3000&page=",
+                image: "Вестерны",
+                title: "Вестерны",
+                filmsCount: 100
+            ),
+            FilmsCollection(
+                id: 20,
+                urlString: "https://kinopoiskapiunofficial.tech/api/v2.2/films?genres=18&order=RATING&type=ALL&ratingFrom=5&ratingTo=10&yearFrom=1000&yearTo=3000&page=",
+                image: "Мультфильмы",
+                title: "Мультфильмы",
                 filmsCount: 100
             )
         ]

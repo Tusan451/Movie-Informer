@@ -14,8 +14,8 @@ struct FilmsCollectionCellView: View {
     let viewed: Int
     
     var body: some View {
-        HStack(spacing: 20) {
-            HStack(spacing: 20) {
+        HStack(spacing: 16) {
+            HStack(spacing: 16) {
                 Image(imageName)
                     .resizable()
                     .frame(width: 72, height: 72)
@@ -23,7 +23,7 @@ struct FilmsCollectionCellView: View {
                 Text(title)
                     .font(.custom("Inter-SemiBold", size: 16))
                     .foregroundColor(Color("Text Main"))
-                    .frame(width: 130, alignment: .leading)
+                    .frame(width: 140, alignment: .leading)
                     .multilineTextAlignment(.leading)
             }
             
