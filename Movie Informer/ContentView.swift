@@ -18,9 +18,9 @@ struct ContentView: View {
             case .search:
                 SearchCategories()
             case .bookmarks:
-                Text("Bookmarks View")
+                BookmarksView()
             case .viewed:
-                Text("Viewed View")
+                ViewedItemsView()
             case .settings:
                 SettingsView()
             }

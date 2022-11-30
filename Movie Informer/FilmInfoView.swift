@@ -6,11 +6,15 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 struct FilmInfoView: View {
+    var collectionName: String? = nil
+    
     var filmByGenreCollection: GenreFilmData? = nil
     var filmByTopCollection: FilmBaseData? = nil
     var filmBySimilarCollection: SimilarFilm? = nil
+    var savedItem: SavedItem? = nil
     
     @State private var showingTrailer = false
     @State private var addedInBookmarks = false
@@ -22,6 +26,8 @@ struct FilmInfoView: View {
     @State private var filmTeam = [FilmTeamate]()
     @State private var actors = [FilmTeamate]()
     @State private var similarFilms = [SimilarFilm]()
+    
+    @ObservedResults(SavedItem.self) var savedItems
     
     var body: some View {
         ZStack {
@@ -91,7 +97,19 @@ struct FilmInfoView: View {
                                     textColor: Color("Text Main"),
                                     text: addedInBookmarks ? "В закладках" : "В закладки",
                                     iconName: "BookmarkSmall") {
-                                        addedInBookmarks.toggle()
+                                        
+                                        if !addedInBookmarks && !addedInViewed {
+                                            addNewItemTo(.bookmark)
+                                        } else if !addedInBookmarks && addedInViewed {
+                                            editItemFor(.bookmark, value: true)
+                                        } else if addedInBookmarks && addedInViewed {
+                                            editItemFor(.bookmark, value: false)
+                                        } else if addedInBookmarks && !addedInViewed {
+                                            removeFromSaved()
+                                        }
+                                    }
+                                    .task {
+                                        checkFilmForSaved()
                                     }
                                 
                                 ButtonView(
@@ -102,7 +120,19 @@ struct FilmInfoView: View {
                                     textColor: Color("Text Main"),
                                     text: addedInViewed ? "Просмотрено" : "Посмотрели?",
                                     iconName: "ViewSmall") {
-                                        addedInViewed.toggle()
+                                        
+                                        if !addedInViewed && !addedInBookmarks {
+                                            addNewItemTo(.viewed)
+                                        } else if !addedInViewed && addedInBookmarks {
+                                            editItemFor(.viewed, value: true)
+                                        } else if addedInViewed && addedInBookmarks {
+                                            editItemFor(.viewed, value: false)
+                                        } else if addedInViewed && !addedInBookmarks {
+                                            removeFromSaved()
+                                        }
+                                    }
+                                    .task {
+                                        checkFilmForSaved()
                                     }
                             }
                         }
@@ -157,7 +187,7 @@ struct FilmInfoView: View {
                             
                             LazyVStack(spacing: 20) {
                                 ForEach(similarFilms, id: \.filmId) { film in
-                                    NavigationLink(destination: FilmInfoView(filmBySimilarCollection: film)) {
+                                    NavigationLink(destination: FilmInfoView(collectionName: collectionName, filmBySimilarCollection: film)) {
                                         SimilarFilmsView(
                                             imageUrl: film.posterUrl,
                                             titleRu: film.nameRu,
@@ -173,6 +203,7 @@ struct FilmInfoView: View {
                     }
                     .navigationTitle(setNavigationTitle())
                     .navigationBarTitleDisplayMode(.inline)
+                    
                 } else {
                     // Добавить error view
                     Text("Error data")
@@ -558,6 +589,8 @@ extension FilmInfoView {
             return "О фильме"
         } else if let _ = filmByTopCollection {
             return "О фильме"
+        } else if let _ = savedItem {
+            return "О фильме"
         } else {
             return "Похожий фильм"
         }
@@ -581,7 +614,155 @@ extension FilmInfoView {
             loadTrailers(filmBySimilarCollection.filmId)
             loadFilmBoxOffice(filmBySimilarCollection.filmId)
             loadFilmTeam(filmBySimilarCollection.filmId)
+        } else if let savedItem = savedItem {
+            loadFilmInfoById(savedItem.filmId)
+            loadTrailers(savedItem.filmId)
+            loadFilmBoxOffice(savedItem.filmId)
+            loadFilmTeam(savedItem.filmId)
+            loadSimilarFilms(savedItem.filmId)
         }
     
+    }
+    
+    private func addCountriesTo(_ item: SavedItem) {
+        guard let filmInfoById = filmInfoById else { return }
+        
+        for country in filmInfoById.countries {
+            let countryData = CountryData()
+            countryData.countryName = country.country
+            item.countries.append(countryData)
+        }
+    }
+    
+    private func addGenresTo(_ item: SavedItem) {
+        guard let filmInfoById = filmInfoById else { return }
+        
+        for genre in filmInfoById.genres {
+            let genreData = GenreData()
+            genreData.genreName = genre.genre
+            item.genres.append(genreData)
+        }
+    }
+    
+    private func checkFilmForSaved() {
+        guard let filmInfoById = filmInfoById else { return }
+        
+        for item in savedItems {
+            if item.filmId == filmInfoById.kinopoiskId && item.inBookmarks == true {
+                addedInBookmarks = true
+                break
+            } else {
+                addedInBookmarks = false
+            }
+        }
+        
+        for item in savedItems {
+            if item.filmId == filmInfoById.kinopoiskId && item.inViewed == true {
+                addedInViewed = true
+                break
+            } else {
+                addedInViewed = false
+            }
+        }
+    }
+    
+    private func addNewItemTo(_ category: SavedCategory) {
+        guard let filmInfoById = filmInfoById else { return }
+        
+        if category == .bookmark {
+            let item = SavedItem()
+            if let collectionName = collectionName {
+                item.collectionName = collectionName
+            } else {
+                item.collectionName = ""
+            }
+            item.filmId = filmInfoById.kinopoiskId
+            item.inBookmarks = true
+            item.nameRu = filmInfoById.nameRu
+            item.nameOriginal = filmInfoById.nameOriginal
+            item.posterUrl = filmInfoById.posterUrl
+            item.filmRating = filmInfoById.ratingKinopoisk
+            item.ratingAwait = filmInfoById.ratingAwait
+            item.year = filmInfoById.year
+            item.filmLength = filmInfoById.filmLength
+            addCountriesTo(item)
+            addGenresTo(item)
+            
+            $savedItems.append(item)
+            addedInBookmarks = true
+        } else {
+            let item = SavedItem()
+            if let collectionName = collectionName {
+                item.collectionName = collectionName
+            } else {
+                item.collectionName = ""
+            }
+            item.filmId = filmInfoById.kinopoiskId
+            item.inViewed = true
+            item.nameRu = filmInfoById.nameRu
+            item.nameOriginal = filmInfoById.nameOriginal
+            item.posterUrl = filmInfoById.posterUrl
+            item.filmRating = filmInfoById.ratingKinopoisk
+            item.ratingAwait = filmInfoById.ratingAwait
+            item.year = filmInfoById.year
+            item.filmLength = filmInfoById.filmLength
+            addCountriesTo(item)
+            addGenresTo(item)
+            
+            $savedItems.append(item)
+            addedInViewed = true
+        }
+    }
+    
+    private func editItemFor(_ category: SavedCategory, value: Bool) {
+        guard let filmInfoById = filmInfoById else { return }
+        
+        if category == .bookmark {
+            for item in savedItems {
+                if item.filmId == filmInfoById.kinopoiskId {
+                    if let newItem = item.thaw(),
+                       let realm = newItem.realm {
+                        try? realm.write {
+                            newItem.inBookmarks = value
+                        }
+                    }
+                    addedInBookmarks = value
+                    break
+                }
+            }
+        } else {
+            for item in savedItems {
+                if item.filmId == filmInfoById.kinopoiskId {
+                    if let newItem = item.thaw(),
+                       let realm = newItem.realm {
+                        try? realm.write {
+                            newItem.inViewed = value
+                        }
+                    }
+                    addedInViewed = value
+                    break
+                }
+            }
+        }
+    }
+    
+    private func removeFromSaved() {
+        guard let filmInfoById = filmInfoById else { return }
+        
+        for item in savedItems {
+            if item.filmId == filmInfoById.kinopoiskId {
+                if let newItem = item.thaw(),
+                    let realm = newItem.realm {
+                    try? realm.write {
+                        realm.delete(newItem.countries)
+                        realm.delete(newItem.genres)
+                        realm.delete(newItem)
+                    }
+                }
+                addedInViewed = false
+                addedInBookmarks = false
+                break
+            }
+        }
     }
 }

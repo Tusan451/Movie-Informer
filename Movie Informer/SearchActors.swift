@@ -19,6 +19,8 @@ struct SearchActors: View {
             if searchText.isEmpty {
                 PlaceholderView(
                     image: "person.text.rectangle.fill",
+                    imageWidth: 90,
+                    imageHeight: 70,
                     color: Color("Red Accent"),
                     title: "Найти актера",
                     message: "Подробная информация о любимом актере"

@@ -23,6 +23,10 @@ struct ActorInfoView: View {
             ScrollView {
                 if let actorInfoById = actorInfoById {
                     VStack(spacing: 24) {
+                        Rectangle()
+                            .foregroundColor(Color("Back Main"))
+                            .frame(width: UIScreen.main.bounds.width, height: 5)
+                        
                         ActorInfoHeaderView(
                             image: actorInfoById.posterUrl,
                             nameRu: actorInfoById.nameRu,
@@ -85,6 +89,9 @@ struct ActorInfoView: View {
                             .foregroundColor(Color("Back Main"))
                             .frame(width: UIScreen.main.bounds.width, height: 60)
                     }
+                    .navigationTitle("Об актере")
+                    .navigationBarTitleDisplayMode(.inline)
+                    
                 } else {
                     // Добавить error view
                     Text("Error data")

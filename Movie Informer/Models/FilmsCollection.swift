@@ -7,7 +7,7 @@
 
 import Foundation
 
-let apiKey = "bd8e1e8b-cfdb-4e53-a67f-d36f9abfe756"
+let apiKey = "39c6676a-f3a3-4c51-8d69-bebae77b5689"
 
 enum ServerUrlStrings: String {
     case baseUrl = "https://kinopoiskapiunofficial.tech/api/v2.2/films/"

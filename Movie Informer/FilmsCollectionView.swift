@@ -29,7 +29,7 @@ struct FilmsCollectionView: View {
                     LazyVStack {
                         if filmsTop.count != 0 {
                             ForEach(Array(filmsTop.enumerated()), id: \.offset) { (index, film) in
-                                NavigationLink(destination: FilmInfoView(filmByTopCollection: film)) {
+                                NavigationLink(destination: FilmInfoView(collectionName: filmsCollection.title, filmByTopCollection: film)) {
                                     FilmPreviewRowView(
                                         image: film.posterUrl,
                                         position: index + 1,
@@ -49,7 +49,7 @@ struct FilmsCollectionView: View {
                             }
                         } else {
                             ForEach(Array(filmsGenre.enumerated()), id: \.offset) { (index, filmGenre) in
-                                NavigationLink(destination: FilmInfoView(filmByGenreCollection: filmGenre)) {
+                                NavigationLink(destination: FilmInfoView(collectionName: filmsCollection.title, filmByGenreCollection: filmGenre)) {
                                     FilmSecondPreviewRowView(
                                         image: filmGenre.posterUrl,
                                         position: index + 1,

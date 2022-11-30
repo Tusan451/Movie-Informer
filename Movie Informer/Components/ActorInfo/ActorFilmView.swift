@@ -16,6 +16,8 @@ struct ActorFilmView: View {
     let countries: [FilmCountry]
     let genres: [Genre]
     let rating: String?
+    var bookmarkButton: RoundedButtonView? = nil
+    var viewedButton: RoundedButtonView? = nil
     
     var body: some View {
         HStack(spacing: 24) {
@@ -63,39 +65,66 @@ struct ActorFilmView: View {
                 }
             }
             
-            VStack(spacing: 8) {
+            VStack(spacing: 12) {
                 
-                if let title = title {
-                    Text(title)
-                        .font(.custom("Inter-SemiBold", size: 15))
-                        .foregroundColor(Color("Text Main"))
-                        .frame(width: UIScreen.main.bounds.width / 1.7, alignment: .topLeading)
-                        .multilineTextAlignment(.leading)
-                }
-                
-                VStack(spacing: 4) {
-                    Text(enTitleAndYear())
-                        .font(.custom("Inter-Regular", size: 12))
-                        .foregroundColor(Color("Text Main"))
-                        .frame(width: UIScreen.main.bounds.width / 1.7, alignment: .leading)
-                        .multilineTextAlignment(.leading)
+                VStack(spacing: 8) {
                     
-                    if let length = length {
-                        Text("\(length) мин.")
+                    if let title = title {
+                        Text(title)
+                            .font(.custom("Inter-SemiBold", size: 15))
+                            .foregroundColor(Color("Text Main"))
+                            .frame(width: UIScreen.main.bounds.width / 1.7, alignment: .topLeading)
+                            .multilineTextAlignment(.leading)
+                    }
+                    
+                    VStack(spacing: 4) {
+                        Text(enTitleAndYear())
                             .font(.custom("Inter-Regular", size: 12))
                             .foregroundColor(Color("Text Main"))
                             .frame(width: UIScreen.main.bounds.width / 1.7, alignment: .leading)
                             .multilineTextAlignment(.leading)
+                        
+                        if let length = length {
+                            Text("\(length) мин.")
+                                .font(.custom("Inter-Regular", size: 12))
+                                .foregroundColor(Color("Text Main"))
+                                .frame(width: UIScreen.main.bounds.width / 1.7, alignment: .leading)
+                                .multilineTextAlignment(.leading)
+                        }
+                    }
+                    
+                    Text(setCountryAndGenres())
+                        .font(.custom("Inter-Medium", size: 12))
+                        .foregroundColor(Color("Text Secondary"))
+                        .frame(width: UIScreen.main.bounds.width / 1.7, alignment: .leading)
+                        .multilineTextAlignment(.leading)
+                }
+                .frame(width: UIScreen.main.bounds.width / 1.7, height: 90, alignment: .topLeading)
+                
+                HStack(spacing: 8) {
+                    if let bookmarkButton = bookmarkButton {
+                        RoundedButtonView(
+                            width: bookmarkButton.width,
+                            height: bookmarkButton.height,
+                            buttonColor: bookmarkButton.buttonColor,
+                            iconColor: bookmarkButton.iconColor,
+                            iconName: bookmarkButton.iconName,
+                            action: bookmarkButton.action
+                        )
+                    }
+                    if let viewedButton = viewedButton {
+                        RoundedButtonView(
+                            width: viewedButton.width,
+                            height: viewedButton.height,
+                            buttonColor: viewedButton.buttonColor,
+                            iconColor: viewedButton.iconColor,
+                            iconName: viewedButton.iconName,
+                            action: viewedButton.action
+                        )
                     }
                 }
-                
-                Text(setCountryAndGenres())
-                    .font(.custom("Inter-Medium", size: 12))
-                    .foregroundColor(Color("Text Secondary"))
-                    .frame(width: UIScreen.main.bounds.width / 1.7, alignment: .leading)
-                    .multilineTextAlignment(.leading)
+                .frame(width: UIScreen.main.bounds.width / 1.7, alignment: .leading)
             }
-            .frame(width: UIScreen.main.bounds.width / 1.7, height: 140, alignment: .topLeading)
         }
     }
 }
@@ -110,7 +139,17 @@ struct ActorFilmView_Previews: PreviewProvider {
             length: 189,
             countries: [FilmCountry(country: "США")],
             genres: [Genre(genre: "драма"), Genre(genre: "криминал"), Genre(genre: "приключения")],
-            rating: "9.1"
+            rating: "9.1",
+            bookmarkButton: RoundedButtonView(
+                width: 32,
+                height: 32,
+                buttonColor: Color("Red Accent"),
+                iconColor: .white,
+                iconName: "BookmarkSmall",
+                action: {
+                    ///
+                }
+            )
         )
     }
 }
