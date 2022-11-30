@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HomeView: View {
-    let filmsCollections = FilmsCollection.getFilmsCollection()
+    @State private var filmsCollections = [FilmsCollection]()
     
     var body: some View {
         NavigationView {
@@ -19,7 +19,9 @@ struct HomeView: View {
                     VStack {
                         ForEach(filmsCollections) { collection in
                             NavigationLink(
-                                destination: FilmsCollectionView(filmsCollection: collection)) {
+                                destination: FilmsCollectionView(
+                                    filmsCollection: collection
+                                )) {
                                     FilmsCollectionCellView(
                                         imageName: collection.image,
                                         title: collection.title,
@@ -35,6 +37,9 @@ struct HomeView: View {
                 }
                 .navigationTitle("Подборки")
             }
+            .onAppear() {
+                updateCollections()
+            }
         }
         .tint(Color("Secondary Accent"))
     }
@@ -45,5 +50,13 @@ struct HomeView_Previews: PreviewProvider {
         VStack {
             HomeView()
         }
+    }
+}
+
+
+extension HomeView {
+    
+    private func updateCollections() {
+        filmsCollections = FilmsCollection.getFilmsCollection()
     }
 }

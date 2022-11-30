@@ -122,16 +122,6 @@ extension BookmarksView {
         return genres
     }
     
-//    private func setRatingFor(_ film: FilmInfoById) -> String? {
-//        if let ratingKinopoisk = film.ratingKinopoisk {
-//            return String(ratingKinopoisk)
-//        } else if let ratingAwait = film.ratingAwait {
-//            return String(ratingAwait) + "%"
-//        } else {
-//            return nil
-//        }
-//    }
-    
     private func filterBookmarks() {
         bookmarks = savedItems.filter { $0.inBookmarks }
         print("Bookmarks contains:", bookmarks)

@@ -9,11 +9,12 @@ import SwiftUI
 
 struct FilmsCollectionView: View {
     let filmsCollection: FilmsCollection
+    
     @State private var currentPage = 1
     @State private var pagesCount = 0
     @State private var filmsTop = [FilmBaseData]()
     @State private var filmsGenre = [GenreFilmData]()
-    
+        
     var body: some View {
         ZStack {
             Color("Back Main")
@@ -86,8 +87,7 @@ struct FilmsCollectionView_Previews: PreviewProvider {
                 urlString: "https://kinopoiskapiunofficial.tech/api/v2.2/films/top?type=TOP_250_BEST_FILMS&page=",
                 image: "250 лучших фильмов",
                 title: "250 лучших фильмов",
-                filmsCount: 250,
-                viewed: 15
+                filmsCount: 250
             )
         )
     }
