@@ -35,3 +35,6 @@ let apiKey = "Your Api Key" // Enter API KEY here
 ![Frame 80](https://user-images.githubusercontent.com/54122530/205042037-22551a42-0d76-4ce5-bdb2-4494317d1c19.png)
 ![Frame 78](https://user-images.githubusercontent.com/54122530/205042982-a73021d8-2255-48a3-a6df-e62ca6990e63.png)
 ![Frame 81](https://user-images.githubusercontent.com/54122530/205043505-8b6ddee8-8e5e-44cd-8c7b-3102d5e61ae5.png)
+
+## Дизайн
+Приложение сверстано по собственным дизайн макетам: [ссылка на фигму](https://www.figma.com/file/3IsGHzcDlXc9TsgY6L9vSr/Movie-Informer-App?node-id=0%3A1&t=BytGdKtWy1UXQPOM-1)
